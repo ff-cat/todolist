@@ -7,16 +7,14 @@ import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography}
 import {Menu} from "@material-ui/icons";
 
 export type FilterType = 'all' | 'active' | 'completed'
-type TodolistType = {
+export type TodolistType = {
     id: string
     title: string
     filter: FilterType
 }
-type TasksStateType = {
+export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
-
-console.log('Yo')
 
 export function App() {
 
