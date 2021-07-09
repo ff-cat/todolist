@@ -1,9 +1,9 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
-import {FilterType} from "./App";
+import React, {ChangeEvent} from "react";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@material-ui/icons";
 import {Button, Checkbox, IconButton} from "@material-ui/core";
+import {FilterType} from "./App";
 
 export type TaskType = {
     id: string
@@ -16,17 +16,15 @@ type TodolistPropsType = {
     tasks: Array<TaskType>
     filter: FilterType
     removeTask: (id: string, todolistId: string) => void
-    changeFilter: (value: FilterType, id: string) => void
     addTask: (value: string, todolistId: string) => void
     changeStatus: (id: string, isDone: boolean, todolistId: string) => void
     changeTaskTitle: (id: string, value: string, todolistId: string) => void
     removeTodolist: (id: string) => void
     changeTodolistTitle: (id: string, title: string) => void
+    changeFilter: (todolistId: string, filter: FilterType) => void
 }
 
 export function Todolist(props: TodolistPropsType) {
-    let [title, setTitle] = useState('')
-    let [error, setError] = useState<string | null>(null)
     const addTask = (title: string) => {
         props.addTask(title, props.id)
     }
@@ -36,9 +34,9 @@ export function Todolist(props: TodolistPropsType) {
     }
 
 
-    const onAllClickHandler = () => props.changeFilter('all', props.id)
-    const onActiveClickHandler = () => props.changeFilter('active', props.id)
-    const onCompletedClickHandler = () => props.changeFilter('completed', props.id)
+    const onAllClickHandler = () => props.changeFilter(props.id, 'all')
+    const onActiveClickHandler = () => props.changeFilter(props.id, 'active')
+    const onCompletedClickHandler = () => props.changeFilter( props.id, 'completed')
 
 
     return (
