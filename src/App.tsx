@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {TaskType, Todolist} from "./Todolist";
 import {AddItemForm} from "./AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@material-ui/core";
@@ -29,34 +29,39 @@ export function App() {
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch()
 
-    function removeTask(taskId: string, todolistId: string) {
+    const removeTask = useCallback((taskId: string, todolistId: string) => {
         dispatch(RemoveTaskAC(taskId, todolistId))
-    }
-    function addTask(title: string, todolistId: string) {
-        dispatch(AddTaskAC(title, todolistId))
-    }
-    function changeTaskStatus(taskId: string, isDone: boolean, todolistId: string) {
-        dispatch(ChangeTaskStatusAC(taskId, isDone, todolistId))
-    }
-    function changeTaskTitle(taskId: string, title: string, todolistId: string) {
-        dispatch(ChangeTaskTitleAC(taskId, title, todolistId))
-    }
+    }, [dispatch])
 
-    function removeTodolist(todolistId: string) {
+    const addTask = useCallback((title: string, todolistId: string) => {
+        dispatch(AddTaskAC(title, todolistId))
+    }, [dispatch])
+
+    const changeTaskStatus = useCallback((taskId: string, isDone: boolean, todolistId: string) => {
+        dispatch(ChangeTaskStatusAC(taskId, isDone, todolistId))
+    }, [dispatch])
+
+    const changeTaskTitle = useCallback((taskId: string, title: string, todolistId: string) => {
+        dispatch(ChangeTaskTitleAC(taskId, title, todolistId))
+    }, [dispatch])
+
+    const removeTodolist = useCallback((todolistId: string) => {
         let action = RemoveTodolistAC(todolistId)
         dispatch(action)
-    }
-    function addTodolist(title: string) {
+    }, [dispatch])
+
+    const changeTodolistTitle = useCallback((todolistId: string, title: string) => {
+        dispatch(ChangeTodolistTitleAC(todolistId, title))
+    }, [dispatch])
+
+    const changeTodolistFilter = useCallback((todolistId: string, filter: FilterType) => {
+        dispatch(ChangeTodolistFilterAC(todolistId, filter))
+    }, [dispatch])
+
+    const addTodolist = useCallback((title: string) => {
         let action = AddTodolistAC(title)
         dispatch(action)
-    }
-    function changeTodolistTitle(todolistId: string, title: string) {
-        dispatch(ChangeTodolistTitleAC(todolistId, title))
-    }
-    function changeTodolistFilter(todolistId: string, filter: FilterType) {
-        dispatch(ChangeTodolistFilterAC(todolistId, filter))
-
-    }
+    }, [dispatch])
 
     return (
         <div className="App">
@@ -80,12 +85,7 @@ export function App() {
                         todolists.map(tl => {
                             let allTodolistTasks = tasks[tl.id]
                             let tasksForTodolist = allTodolistTasks
-                            if (tl.filter === 'active') {
-                                tasksForTodolist = allTodolistTasks.filter(t => !t.isDone)
-                            }
-                            if (tl.filter === 'completed') {
-                                tasksForTodolist = allTodolistTasks.filter(t => t.isDone)
-                            }
+
                             return (
                                 <Grid item key={tl.id}>
                                     <Paper style={{padding: '10px'}}>
@@ -96,11 +96,11 @@ export function App() {
                                             filter={tl.filter}
                                             tasks={tasksForTodolist}
                                             removeTask={removeTask}
-                                            changeFilter={changeTodolistFilter}
                                             addTask={addTask}
                                             changeStatus={changeTaskStatus}
                                             changeTaskTitle={changeTaskTitle}
                                             removeTodolist={removeTodolist}
+                                            changeFilter={changeTodolistFilter}
                                             changeTodolistTitle={changeTodolistTitle}
                                         />
                                     </Paper>

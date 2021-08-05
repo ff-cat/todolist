@@ -1,6 +1,25 @@
 import {v1} from "uuid";
 import {FilterType, TodolistType} from "../App";
 
+type ActionsType = RemoveTodolistAT | AddTodolistAT | ChangeTodolistTitleAT | ChangeTodolistFilterAT
+
+const initialState: Array<TodolistType> = []
+
+export const todolistsReducer = (state = initialState, action: ActionsType): Array<TodolistType> => {
+    switch (action.type) {
+        case 'REMOVE-TODOLIST':
+            return state.filter(t => t.id !== action.payload.todolistId)
+        case 'ADD-TODOLIST':
+            return [...state, {id: action.todolistId, title: action.payload.title, filter: "all"}]
+        case 'CHANGE-TODOLIST-TITLE':
+            return state.map(t => t.id === action.payload.todolistId ? {...t, title: action.payload.title} : t)
+        case 'CHANGE-TODOLIST-FILTER':
+            return state.map(t => t.id === action.payload.todolistId ? {...t, filter: action.payload.filter} : t)
+        default:
+            return state
+    }
+}
+
 export type RemoveTodolistAT = {
     type: 'REMOVE-TODOLIST'
     payload: { todolistId: string }
@@ -26,25 +45,6 @@ export type ChangeTodolistFilterAT = {
     }
 
 
-}
-
-type ActionsType = RemoveTodolistAT | AddTodolistAT | ChangeTodolistTitleAT | ChangeTodolistFilterAT
-
-const initialState: Array<TodolistType> = []
-
-export const todolistsReducer = (state = initialState, action: ActionsType): Array<TodolistType> => {
-    switch (action.type) {
-        case 'REMOVE-TODOLIST':
-            return state.filter(t => t.id !== action.payload.todolistId)
-        case 'ADD-TODOLIST':
-            return [...state, {id: action.todolistId, title: action.payload.title, filter: "all"}]
-        case 'CHANGE-TODOLIST-TITLE':
-            return state.map(t => t.id === action.payload.todolistId ? {...t, title: action.payload.title} : t)
-        case 'CHANGE-TODOLIST-FILTER':
-            return state.map(t => t.id === action.payload.todolistId ? {...t, filter: action.payload.filter} : t)
-        default:
-            return state
-    }
 }
 
 export const RemoveTodolistAC = (todolistId: string): RemoveTodolistAT => ({

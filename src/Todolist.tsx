@@ -1,9 +1,10 @@
-import React, {ChangeEvent} from "react";
+import React, {useCallback} from "react";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 import {Delete} from "@material-ui/icons";
-import {Button, Checkbox, IconButton} from "@material-ui/core";
+import {Button, IconButton} from "@material-ui/core";
 import {FilterType} from "./App";
+import {Task} from "./Task";
 
 export type TaskType = {
     id: string
@@ -24,20 +25,27 @@ type TodolistPropsType = {
     changeFilter: (todolistId: string, filter: FilterType) => void
 }
 
-export function Todolist(props: TodolistPropsType) {
-    const addTask = (title: string) => {
+export const Todolist = React.memo((props: TodolistPropsType) => {
+    console.log("Todolist called")
+    const addTask = useCallback((title: string) => {
         props.addTask(title, props.id)
-    }
+    }, [props.addTask, props.id])
     const removeTodolist = () => props.removeTodolist(props.id)
-    const changeTodolistTitle = (title: string) => {
+    const changeTodolistTitle = useCallback((title: string) => {
         props.changeTodolistTitle(props.id, title)
+    }, [props.changeTodolistTitle, props.id])
+
+    const onAllClickHandler = useCallback(() => props.changeFilter(props.id, 'all'), [props.changeFilter, props.id])
+    const onActiveClickHandler = useCallback(() => props.changeFilter(props.id, 'active'), [props.changeFilter, props.id])
+    const onCompletedClickHandler = useCallback(() => props.changeFilter(props.id, 'completed'), [props.changeFilter, props.id])
+
+    let tasksForTodolist = props.tasks
+    if (props.filter === 'active') {
+        tasksForTodolist = props.tasks.filter(t => !t.isDone)
     }
-
-
-    const onAllClickHandler = () => props.changeFilter(props.id, 'all')
-    const onActiveClickHandler = () => props.changeFilter(props.id, 'active')
-    const onCompletedClickHandler = () => props.changeFilter( props.id, 'completed')
-
+    if (props.filter === 'completed') {
+        tasksForTodolist = props.tasks.filter(t => t.isDone)
+    }
 
     return (
         <div>
@@ -49,27 +57,15 @@ export function Todolist(props: TodolistPropsType) {
             <AddItemForm addItem={addTask}/>
             <div>
                 {
-                    props.tasks.map(t => {
-                            const onClickHandler = () => props.removeTask(t.id, props.id)
-                            const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                                let newIsDoneValue = e.currentTarget.checked
-                                props.changeStatus(t.id, newIsDoneValue, props.id)
-                            }
-                            const onChangeTitleHandler = (value: string) => {
-                                props.changeTaskTitle(t.id, value, props.id)
-                            }
-                            return (
-                                <div key={t.id} className={t.isDone ? 'is-done' : ''}>
-                                    <Checkbox color='primary' onChange={onChangeStatusHandler} checked={t.isDone}/>
-                                    <EditableSpan title={t.title}
-                                                  onChange={onChangeTitleHandler}/>
-                                    <IconButton onClick={onClickHandler}>
-                                        <Delete/>
-                                    </IconButton>
-                                </div>
-                            )
-                        }
-                    )}
+                    tasksForTodolist.map(t => <Task
+                        key={t.id}
+                        task={t}
+                        removeTask={props.removeTask}
+                        changeStatus={props.changeStatus}
+                        changeTaskTitle={props.changeTaskTitle}
+                        todolistId={props.id}
+                    />)
+                }
             </div>
             <div>
                 <Button
@@ -90,5 +86,5 @@ export function Todolist(props: TodolistPropsType) {
             </div>
         </div>
     )
-}
+})
 

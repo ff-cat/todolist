@@ -2,37 +2,6 @@ import {v1} from "uuid";
 import {AddTodolistAT, RemoveTodolistAT} from "./todolists-reducer";
 import {TasksStateType} from "../App";
 
-export type RemoveTaskAT = {
-    type: 'REMOVE-TASK'
-    payload: {
-        taskId: string
-        todolistId: string
-    }
-}
-export type AddTaskAT = {
-    type: 'ADD-TASK'
-    payload: {
-        title: string
-        todolistId: string
-    }
-}
-export type ChangeTaskStatusAT = {
-    type: 'CHANGE-TASK-STATUS'
-    payload: {
-        taskId: string
-        isDone: boolean
-        todolistId: string
-    }
-}
-export type ChangeTaskTitleAT = {
-    type: 'CHANGE-TASK-TITLE'
-    payload: {
-        taskId: string
-        title: string
-        todolistId: string
-    }
-}
-
 type ActionsType = RemoveTaskAT | AddTaskAT | ChangeTaskStatusAT | ChangeTaskTitleAT | AddTodolistAT | RemoveTodolistAT
 
 const initialState: TasksStateType = {}
@@ -76,6 +45,38 @@ export const tasksReducer = (state = initialState, action: ActionsType): TasksSt
             return newState
         default:
             return state
+    }
+}
+
+
+export type RemoveTaskAT = {
+    type: 'REMOVE-TASK'
+    payload: {
+        taskId: string
+        todolistId: string
+    }
+}
+export type AddTaskAT = {
+    type: 'ADD-TASK'
+    payload: {
+        title: string
+        todolistId: string
+    }
+}
+export type ChangeTaskStatusAT = {
+    type: 'CHANGE-TASK-STATUS'
+    payload: {
+        taskId: string
+        isDone: boolean
+        todolistId: string
+    }
+}
+export type ChangeTaskTitleAT = {
+    type: 'CHANGE-TASK-TITLE'
+    payload: {
+        taskId: string
+        title: string
+        todolistId: string
     }
 }
 
