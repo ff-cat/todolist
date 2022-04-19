@@ -4,12 +4,12 @@ import {Todolist} from "./Todolist";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../state/store";
 import {TodolistsType} from "./AppWithRedux";
-
+import './TodolistContainer.css'
 
 export const TodolistContainer = React.memo(() => {
     const todolists = useSelector<AppRootStateType, TodolistsType[]>(state => state.todolists)
     return (
-        <div>
+        <Grid container spacing={3}>
             {
                 todolists.map(tl => {
                     return (
@@ -26,6 +26,6 @@ export const TodolistContainer = React.memo(() => {
                     )
                 })
             }
-        </div>
+        </Grid>
     )
 })

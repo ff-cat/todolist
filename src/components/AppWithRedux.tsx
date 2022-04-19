@@ -36,16 +36,14 @@ function AppWithRedux() {
                     <Button color='inherit'>Login</Button>
                 </Toolbar>
             </AppBar>
-            <Container fixed>
+            <Container fixed >
                 <Grid container style={{padding: '20px'}}>
                     <AddItemForm addItem={useCallback((title) => {
                         let action = AddTodolistAC(title)
                         dispatch(action)
                     }, [dispatch])}/>
                 </Grid>
-                <Grid container spacing={4}>
                     <TodolistContainer/>
-                </Grid>
             </Container>
         </div>
     )

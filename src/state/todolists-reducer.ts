@@ -1,11 +1,12 @@
 import {TodolistsType} from "../components/AppWithRedux";
 import {ACTIONS_TYPE, TodolistReducerActionsType} from "./actions";
+import {v1} from "uuid";
 
-// export let todolistId1 = v1()
-// export let todolistId2 = v1()
+export let todolistId1 = v1()
+export let todolistId2 = v1()
 const initialState: TodolistsType[] = [
-    // {id: todolistId1, title: 'What to learn', filter: 'all',},
-    // {id: todolistId2, title: 'What to buy', filter: 'all',},
+    {id: todolistId1, title: 'What to learn', filter: 'all',},
+    {id: todolistId2, title: 'What to buy', filter: 'all',},
 ]
 
 export const todolistsReducer = (state: TodolistsType[] = initialState, action: TodolistReducerActionsType): TodolistsType[] => {
