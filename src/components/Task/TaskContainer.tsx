@@ -1,7 +1,7 @@
 import React from "react";
 import {useSelector} from "react-redux";
-import {AppRootStateType} from "../state/store";
-import {TasksType} from "./AppWithRedux";
+import {AppRootStateType} from "../../state/store";
+import {TasksType} from "../../AppWithRedux";
 import {Task} from "./Task";
 
 type PropsType = {

@@ -1,7 +1,8 @@
-import {TasksType} from "../components/AppWithRedux";
+import {TasksType} from "../../AppWithRedux";
 import {v1} from "uuid";
-import {ACTIONS_TYPE, TaskReducerActionsType} from "./actions";
+import {ACTIONS_TYPE} from "../actions/action-types";
 import {todolistId1, todolistId2} from "./todolists-reducer";
+import {TaskReducerActionsType} from "../actions/task-actions";
 
 const initialState: TasksType = {
     [todolistId1]: [

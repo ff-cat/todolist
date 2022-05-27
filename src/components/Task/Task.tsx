@@ -1,9 +1,9 @@
 import React, {useCallback} from "react";
 import {Checkbox, IconButton} from "@material-ui/core";
-import {ChangeTaskStatusAC, ChangeTaskTitleAC, RemoveTaskAC} from "../state/actions";
-import {EditableSpan} from "./EditableSpan";
+import {EditableSpan} from "../EditableSpan/EditableSpan";
 import {Delete} from "@material-ui/icons";
 import {useDispatch} from "react-redux";
+import {ChangeTaskStatusAC, ChangeTaskTitleAC, RemoveTaskAC} from "../../state/actions/task-actions";
 
 type PropsType = {
     todolistId: string

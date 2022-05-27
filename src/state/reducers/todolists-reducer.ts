@@ -1,6 +1,7 @@
-import {TodolistsType} from "../components/AppWithRedux";
-import {ACTIONS_TYPE, TodolistReducerActionsType} from "./actions";
+import {TodolistsType} from "../../AppWithRedux";
+import {ACTIONS_TYPE} from "../actions/action-types";
 import {v1} from "uuid";
+import {TodolistReducerActionsType} from "../actions/todolist-actions";
 
 export let todolistId1 = v1()
 export let todolistId2 = v1()

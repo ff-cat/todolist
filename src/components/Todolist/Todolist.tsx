@@ -1,17 +1,13 @@
 import React, {useCallback} from "react"
-import {FilterType} from "./AppWithRedux";
-import {AddItemForm} from "./AddItemForm";
-import {EditableSpan} from "./EditableSpan";
+import {FilterType} from "../../AppWithRedux";
+import {AddItemForm} from "../AddItemForm/AddItemForm";
+import {EditableSpan} from "../EditableSpan/EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {useDispatch} from "react-redux";
-import {
-    AddTaskAC,
-    ChangeTodolistFilterAC,
-    ChangeTodolistTitleAC,
-    RemoveTodolistAC
-} from "../state/actions";
-import {TaskContainer} from "./TaskContainer";
+import {TaskContainer} from "../Task/TaskContainer";
+import {ChangeTodolistFilterAC, ChangeTodolistTitleAC, RemoveTodolistAC} from "../../state/actions/todolist-actions";
+import {AddTaskAC} from "../../state/actions/task-actions";
 
 export type TaskType = {
     id: string

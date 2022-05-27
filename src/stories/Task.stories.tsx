@@ -1,7 +1,7 @@
 import {action} from "@storybook/addon-actions";
 import React from "react";
 import {Checkbox, IconButton} from "@material-ui/core";
-import {EditableSpan} from "../components/EditableSpan";
+import {EditableSpan} from "../components/EditableSpan/EditableSpan";
 import {Delete} from "@material-ui/icons";
 
 const checkboxCallback = action('Status changed')
