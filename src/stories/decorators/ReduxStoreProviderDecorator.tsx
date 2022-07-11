@@ -1,5 +1,5 @@
 import {Provider} from "react-redux";
-import {AppRootStateType} from "../../state/store";
+import {RootStateType} from "../../state/store";
 import {combineReducers, createStore} from "redux";
 import {tasksReducer} from "../../state/reducers/tasks-reducer";
 import {todolistsReducer} from "../../state/reducers/todolists-reducer";
@@ -12,22 +12,66 @@ const rootReducer = combineReducers({
 
 const initialGlobalState = {
     todolists: [
-        {id: "todolistId1", title: "What to learn", filter: "all"},
-        {id: "todolistId2", title: "What to buy", filter: "all"}
-    ] ,
+        {addedDate: '', order: 0, id: "todolistId1", title: "What to learn", filter: "all"},
+        {addedDate: '', order: 0, id: "todolistId2", title: "What to buy", filter: "all"}
+    ],
     tasks: {
         ["todolistId1"]: [
-            {id: v1(), title: "HTML&CSS", isDone: true},
-            {id: v1(), title: "JS", isDone: true}
+            {
+                addedDate: "2022-07-09T12:18:19.477",
+                deadline: null,
+                description: null,
+                id: v1(),
+                order: 0,
+                priority: 1,
+                startDate: null,
+                status: 0,
+                title: "HTML&CSS",
+                todoListId: "86afffa2-d5c3-4c07-ae33-150a87a15863"
+            },
+            {
+                addedDate: "2022-07-09T12:18:19.477",
+                deadline: null,
+                description: null,
+                id: v1(),
+                order: 0,
+                priority: 1,
+                startDate: null,
+                status: 0,
+                title: "REACT",
+                todoListId: "86afffa2-d5c3-4c07-ae33-150a87a15862"
+            },
         ],
         ["todolistId2"]: [
-            {id: v1(), title: "Milk", isDone: true},
-            {id: v1(), title: "React Book", isDone: true}
+            {
+                addedDate: "2022-07-09T12:18:19.477",
+                deadline: null,
+                description: null,
+                id: v1(),
+                order: 0,
+                priority: 1,
+                startDate: null,
+                status: 0,
+                title: "Milk",
+                todoListId: "86afffa2-d5c3-4c07-ae33-150a87a15862"
+            },
+            {
+                addedDate: "2022-07-09T12:18:19.477",
+                deadline: null,
+                description: null,
+                id: v1(),
+                order: 0,
+                priority: 1,
+                startDate: null,
+                status: 0,
+                title: "Bread",
+                todoListId: "86afffa2-d5c3-4c07-ae33-150a87a15862"
+            },
         ]
     }
 };
 
-export const storyBookStore = createStore(rootReducer, initialGlobalState as AppRootStateType);
+export const storyBookStore = createStore(rootReducer, initialGlobalState as RootStateType);
 
 export const ReduxStoreProviderDecorator = (storyFn: any) => {
     return <Provider store={storyBookStore}> {storyFn()}</Provider>

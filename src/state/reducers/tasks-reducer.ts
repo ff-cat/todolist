@@ -1,20 +1,11 @@
-import {TasksType} from "../../AppWithRedux";
-import {v1} from "uuid";
 import {ACTIONS_TYPE} from "../actions/action-types";
-import {todolistId1, todolistId2} from "./todolists-reducer";
 import {TaskReducerActionsType} from "../actions/task-actions";
+import {TaskType} from "../../api/task-api";
 
+export type TasksType = {
+    [key: string]: TaskType[]
+}
 const initialState: TasksType = {
-    [todolistId1]: [
-        {id: v1(), title: 'HTML&CSS', isDone: true},
-        {id: v1(), title: 'JS', isDone: true},
-        {id: v1(), title: 'REACT', isDone: false},
-    ],
-    [todolistId2]: [
-        {id: v1(), title: 'Milk', isDone: true},
-        {id: v1(), title: 'Bread', isDone: true},
-        {id: v1(), title: 'Meat', isDone: false},
-    ],
 }
 
 export const tasksReducer = (state: TasksType = initialState, action: TaskReducerActionsType): TasksType => {
@@ -27,11 +18,7 @@ export const tasksReducer = (state: TasksType = initialState, action: TaskReduce
         case ACTIONS_TYPE.ADD_TASK:
             return {
                 ...state,
-                [action.payload.todolistId]: [{
-                    id: v1(),
-                    title: action.payload.title,
-                    isDone: false
-                }, ...state[action.payload.todolistId]]
+                [action.payload.task.todoListId]: [{...action.payload.task}, ...state[action.payload.task.todoListId]]
             }
         case ACTIONS_TYPE.CHANGE_TASK_TITLE:
             return {
@@ -43,13 +30,22 @@ export const tasksReducer = (state: TasksType = initialState, action: TaskReduce
             return {
                 ...state,
                 [action.payload.todolistId]: state[action.payload.todolistId].map(s => s.id === action.payload.taskId
-                    ? {...s, isDone: !s.isDone} : s)
+                    ? {...s, status: Number(!Boolean(s.status))} : s)
             }
         case ACTIONS_TYPE.ADD_TODOLIST:
             return {[action.payload.todolistId]: [], ...state}
         case ACTIONS_TYPE.REMOVE_TODOLIST:
             delete state[action.payload.todolistId]
             return {...state}
+        case ACTIONS_TYPE.SET_TODOLISTS:
+            const stateCopy = {...state}
+            action.payload.todolists.forEach((tl) => {
+                stateCopy[tl.id] = []
+            })
+            return stateCopy;
+        case ACTIONS_TYPE.SET_TASKS:
+            return {...state, [action.payload.todolistId]: action.payload.tasks
+                        .map(t => ({...t})) }
         default:
             return state
     }

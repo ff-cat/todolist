@@ -1,27 +1,19 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useEffect} from 'react'
 import './App.css'
-import {TaskType} from "./components/Todolist/Todolist"
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
 import {AppBar, Button, Container, Grid, IconButton, Toolbar, Typography} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {useDispatch} from "react-redux";
 import {TodolistContainer} from "./components/Todolist/TodolistContainer";
-import {AddTodolistAC} from "./state/actions/todolist-actions";
-
-export type FilterType = 'all' | 'active' | 'completed'
-
-export type TodolistsType = {
-    id: string
-    title: string
-    filter: FilterType
-}
-export type TasksType = {
-    [key: string]: TaskType[]
-}
+import {AddTodolist, SetTodolists} from "./state/actions/todolist-actions";
 
 
-function AppWithRedux() {
+export const AppWithRedux = () => {
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(SetTodolists())
+    }, [])
 
     return (
         <div className='App'>
@@ -36,17 +28,15 @@ function AppWithRedux() {
                     <Button color='inherit'>Login</Button>
                 </Toolbar>
             </AppBar>
-            <Container fixed >
+            <Container fixed>
                 <Grid container style={{padding: '20px'}}>
                     <AddItemForm addItem={useCallback((title) => {
-                        let action = AddTodolistAC(title)
-                        dispatch(action)
+                        dispatch(AddTodolist(title))
                     }, [dispatch])}/>
                 </Grid>
-                    <TodolistContainer/>
+                <TodolistContainer/>
             </Container>
         </div>
     )
 }
 
-export default AppWithRedux;

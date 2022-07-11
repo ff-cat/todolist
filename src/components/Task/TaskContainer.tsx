@@ -1,8 +1,8 @@
 import React from "react";
 import {useSelector} from "react-redux";
-import {AppRootStateType} from "../../state/store";
-import {TasksType} from "../../AppWithRedux";
+import {RootStateType} from "../../state/store";
 import {Task} from "./Task";
+import {TasksType} from "../../state/reducers/tasks-reducer";
 
 type PropsType = {
     todolistId: string
@@ -10,14 +10,14 @@ type PropsType = {
 }
 
 export const TaskContainer = React.memo((props: PropsType) => {
-    const tasks = useSelector<AppRootStateType, TasksType>(state => state.tasks)
+    const tasks = useSelector<RootStateType, TasksType>(state => state.tasks)
 
     let tasksForTodolist = tasks[props.todolistId]
     if (props.filter === 'active') {
-        tasksForTodolist = tasks[props.todolistId].filter(t => !t.isDone)
+        tasksForTodolist = tasks[props.todolistId].filter(t => !Boolean(t.status))
     }
     if (props.filter === 'completed') {
-        tasksForTodolist = tasks[props.todolistId].filter(t => t.isDone)
+        tasksForTodolist = tasks[props.todolistId].filter(t => Boolean(t.status))
     }
     return (
         <div>
@@ -28,7 +28,7 @@ export const TaskContainer = React.memo((props: PropsType) => {
                         todolistId={props.todolistId}
                         taskId={task.id}
                         title={task.title}
-                        isDone={task.isDone}
+                        status={task.status}
                     />
                 )
             }

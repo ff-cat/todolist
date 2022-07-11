@@ -24,7 +24,15 @@ export const CreateTask = () => {
 export const UpdateTaskTitle = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        taskAPI.updateTask('86afffa2-d5c3-4c07-ae33-150a87a15863', 'fcd6e18e-25cc-49e5-9389-2c8576fddd45', 'Imagine')
+        const model = {
+            title: 'Imagine',
+            description: '',
+            status: 0,
+            priority: 0,
+            startDate: '',
+            deadline: '',
+        }
+        taskAPI.updateTask('86afffa2-d5c3-4c07-ae33-150a87a15863', 'fcd6e18e-25cc-49e5-9389-2c8576fddd45', model)
             .then(res => setState(res.data))
     }, [])
 

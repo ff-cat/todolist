@@ -1,6 +1,8 @@
-import {FilterType} from "../../AppWithRedux";
 import {ACTIONS_TYPE} from "./action-types";
-import {v1} from "uuid";
+import {GetTodolistResponseType, todolistAPI} from "../../api/todolist-api";
+import {RootStateType} from "../store";
+import {ThunkAction} from "redux-thunk";
+import {FilterType} from "../reducers/todolists-reducer";
 
 export type RemoveTodolistAT = {
     type: ACTIONS_TYPE.REMOVE_TODOLIST
@@ -29,12 +31,18 @@ export type ChangeTodolistFilterAT = {
         filter: FilterType
     }
 }
+export type SetTodolistsAT = {
+    type: ACTIONS_TYPE.SET_TODOLISTS
+    payload: {
+        todolists: GetTodolistResponseType[]
+    }
+}
 export type TodolistReducerActionsType =
     RemoveTodolistAT
     | AddTodolistAT
     | ChangeTodolistTitleAT
     | ChangeTodolistFilterAT
-
+    | SetTodolistsAT
 
 
 export const RemoveTodolistAC = (todolistId: string): RemoveTodolistAT => {
@@ -43,10 +51,10 @@ export const RemoveTodolistAC = (todolistId: string): RemoveTodolistAT => {
         payload: {todolistId,},
     }
 }
-export const AddTodolistAC = (title: string): AddTodolistAT => {
+export const AddTodolistAC = (todolistId: string, title: string): AddTodolistAT => {
     return {
         type: ACTIONS_TYPE.ADD_TODOLIST,
-        payload: {todolistId: v1(), title,},
+        payload: {todolistId, title,},
     }
 }
 export const ChangeTodolistTitleAC = (todolistId: string, title: string): ChangeTodolistTitleAT => {
@@ -61,3 +69,45 @@ export const ChangeTodolistFilterAC = (todolistId: string, filter: FilterType): 
         payload: {todolistId, filter,},
     }
 }
+
+export const SetTodolistsAC = (todolists: GetTodolistResponseType[]): SetTodolistsAT => {
+    return {
+        type: ACTIONS_TYPE.SET_TODOLISTS,
+        payload: {todolists}
+    }
+}
+
+
+type ThunkType = ThunkAction<Promise<void>, RootStateType, unknown, TodolistReducerActionsType>
+
+
+export const SetTodolists = (): ThunkType => {
+    return async (dispatch) => {
+        const data = await todolistAPI.getTodolist()
+        data.status === 200 && dispatch(SetTodolistsAC(data.data))
+    }
+}
+
+export const RemoveTodolist = (todolistId: string): ThunkType => {
+    return async (dispatch) => {
+        const data = await todolistAPI.deleteTodolist(todolistId)
+        data.status === 200 && dispatch(RemoveTodolistAC(todolistId))
+    }
+}
+
+export const AddTodolist = (title: string): ThunkType => {
+    return async (dispatch) => {
+        const data = await todolistAPI.createTodolist(title)
+        data.status === 200 && dispatch(AddTodolistAC(data.data.data.item.id, title))
+    }
+}
+
+export const UpdateTodolistTitle = (todolistId: string, title: string): ThunkType => {
+    return async (dispatch) => {
+        const data = await todolistAPI.updateTodolist(todolistId, title)
+        data.status === 200 && dispatch(ChangeTodolistTitleAC(todolistId, title))
+    }
+}
+
+
+

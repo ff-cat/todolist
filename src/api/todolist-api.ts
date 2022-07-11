@@ -1,17 +1,17 @@
 import axios from "axios";
 
-type GetTodolistResponseType = {
+export type GetTodolistResponseType = {
     id: string
     addedDate: string
     order: number
     title: string
 }
-type ResponseType = {
+type ResponseType<I> = {
     resultCode: number
     messages: string[]
     fieldsErrors: string[]
     data: {
-        item?: GetTodolistResponseType
+        item: I
     }
 }
 
@@ -29,13 +29,13 @@ export const todolistAPI = {
         return instance.get<GetTodolistResponseType[]>(`todo-lists`)
     },
     createTodolist(title: string) {
-        return instance.post<ResponseType>(`todo-lists`, {title})
+        return instance.post<ResponseType<GetTodolistResponseType>>(`todo-lists`, {title})
     },
     updateTodolist(todolistId: string, title: string) {
-        return instance.put<ResponseType>(`todo-lists/${todolistId}`, {title})
+        return instance.put<ResponseType<GetTodolistResponseType>>(`todo-lists/${todolistId}`, {title})
     },
     deleteTodolist(todolistId: string) {
-        return instance.delete<ResponseType>(`todo-lists/${todolistId}`)
+        return instance.delete<ResponseType<{}>>(`todo-lists/${todolistId}`)
     }
 }
 

@@ -1,19 +1,15 @@
-import React, {useCallback} from "react"
-import {FilterType} from "../../AppWithRedux";
+import React, {useCallback, useEffect} from "react"
 import {AddItemForm} from "../AddItemForm/AddItemForm";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import {Delete} from "@material-ui/icons";
 import {useDispatch} from "react-redux";
 import {TaskContainer} from "../Task/TaskContainer";
-import {ChangeTodolistFilterAC, ChangeTodolistTitleAC, RemoveTodolistAC} from "../../state/actions/todolist-actions";
-import {AddTaskAC} from "../../state/actions/task-actions";
+import {ChangeTodolistFilterAC, RemoveTodolist, UpdateTodolistTitle,} from "../../state/actions/todolist-actions";
+import {AddTask, SetTasks} from "../../state/actions/task-actions";
+import {FilterType} from "../../state/reducers/todolists-reducer";
 
-export type TaskType = {
-    id: string
-    title: string
-    isDone: boolean
-}
+
 type PropsType = {
     todolistId: string
     title: string
@@ -23,6 +19,10 @@ type PropsType = {
 export const Todolist = React.memo((props: PropsType) => {
     const dispatch = useDispatch()
 
+    useEffect(() => {
+        dispatch(SetTasks(props.todolistId))
+    }, [])
+
     return (
         <div className="App">
             <div>
@@ -31,12 +31,12 @@ export const Todolist = React.memo((props: PropsType) => {
                         <EditableSpan
                             title={props.title}
                             onChange={useCallback((title) => {
-                                dispatch(ChangeTodolistTitleAC(props.todolistId, title))
+                                dispatch(UpdateTodolistTitle(props.todolistId, title))
                             }, [dispatch, props.todolistId])}
                         />
                         <IconButton
                             onClick={useCallback(() => {
-                                dispatch(RemoveTodolistAC(props.todolistId))
+                                dispatch(RemoveTodolist(props.todolistId))
                             }, [dispatch, props.todolistId])}
                         >
                             <Delete/>
@@ -45,7 +45,7 @@ export const Todolist = React.memo((props: PropsType) => {
                 </div>
                 <div>
                     <AddItemForm addItem={useCallback((title: string) => {
-                        dispatch(AddTaskAC(props.todolistId, title))
+                        dispatch(AddTask(props.todolistId, title))
                     }, [dispatch, props.todolistId])}
                     />
                 </div>
