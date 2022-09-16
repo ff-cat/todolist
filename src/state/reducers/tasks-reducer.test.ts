@@ -1,13 +1,12 @@
 import {v1} from "uuid"
-import {tasksReducer} from "./tasks-reducer"
-import {TasksType} from "../../AppWithRedux";
+import {tasksReducer} from "./task/tasks-reducer"
 import {
     AddTaskAC,
-    ChangeTaskStatusAC,
-    ChangeTaskTitleAC,
+    UpdateTaskAC,
     RemoveTaskAC,
 } from "../actions/task-actions";
 import {AddTodolistAC, RemoveTodolistAC} from "../actions/todolist-actions";
+import {TasksType} from "../types/task-types";
 
 let todolistId1: string
 let todolistId2: string
@@ -102,20 +101,34 @@ test('correct task should be added', () => {
     expect(Boolean(endState[todolistId2][0].status)).toBe(false)
 })
 test('correct task should change its name', () => {
-    const endState = tasksReducer(startState, ChangeTaskTitleAC(todolistId2, '2', "New Task Title"))
+    const endState = tasksReducer(startState, UpdateTaskAC(todolistId2, '2', {
+        title: "New Task Title",
+        description: null,
+        status: 0,
+        priority: 1,
+        startDate: '2022',
+        deadline: null,
+    }))
 
     expect(endState[todolistId2][1].title).toBe("New Task Title")
     expect(endState[todolistId1][1].title).toBe('JS')
 })
 test('correct status of task should be changed', () => {
-    const endState = tasksReducer(startState, ChangeTaskStatusAC(todolistId2, '2'))
+    const endState = tasksReducer(startState, UpdateTaskAC(todolistId2, '2', {
+        title: "New Task Title",
+        description: null,
+        status: 1,
+        priority: 1,
+        startDate: '2022',
+        deadline: null,
+    }))
 
     expect(endState[todolistId2].length).toBe(2)
-    expect(Boolean(endState[todolistId2][1].status)).toBeTruthy()
-    expect(Boolean(endState[todolistId1][1].status)).toBeFalsy()
+    expect(endState[todolistId2][1].status).toBe(1)
+    expect(endState[todolistId1][1].status).toBe(0)
 })
 test('new array should be added when new todolist is added', () => {
-    const endState = tasksReducer(startState, AddTodolistAC("new todolist"))
+    const endState = tasksReducer(startState, AddTodolistAC("todolistId3", 'Moon'))
 
     const keys = Object.keys(endState);
     const newKey = keys.find(k => k != "todolistId1" && k != "todolistId2");

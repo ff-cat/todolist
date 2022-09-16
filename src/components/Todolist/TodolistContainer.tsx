@@ -3,7 +3,7 @@ import {Grid, Paper} from "@material-ui/core";
 import {Todolist} from "./Todolist";
 import {useSelector} from "react-redux";
 import {RootStateType} from "../../state/store";
-import {TodolistsType} from "../../state/reducers/todolists-reducer";
+import {TodolistsType} from "../../state/types/todolist-types";
 
 export const TodolistContainer = React.memo(() => {
     const todolists = useSelector<RootStateType, TodolistsType[]>(state => state.todolists)

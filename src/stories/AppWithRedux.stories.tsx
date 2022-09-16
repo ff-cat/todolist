@@ -1,14 +1,14 @@
-import {AppWithRedux} from "../AppWithRedux";
+import {App} from "../App";
 import {ReduxStoreProviderDecorator} from "./decorators/ReduxStoreProviderDecorator";
 
 export default {
     title: 'App Component',
-    component: AppWithRedux,
+    component: App,
     decorators: [ReduxStoreProviderDecorator]
 }
 
 export const AppWithReduxBaseExample = () => {
     return <>
-        <AppWithRedux/>
+        <App/>
     </>
 }

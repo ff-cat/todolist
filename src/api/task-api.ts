@@ -1,31 +1,7 @@
 import axios from "axios";
+import {GetTasksResponseType, RequestTaskType, TaskType} from "../state/types/task-types";
 
-export type TaskType = {
-    addedDate: string
-    deadline: string | null
-    description: string | null
-    id: string
-    order: number
-    priority: number
-    startDate: string | null
-    status: number
-    title: string
-    todoListId: string
-}
-export type RequestTaskType = {
-    title: string
-    description: string | null
-    status: number
-    priority: number
-    startDate: string | null
-    deadline: string | null
-}
-type GetTasksResponseType = {
-    error: string | null
-    totalCount: number
-    items: TaskType[]
-}
-type ResponseType<I> = {
+export type ResponseType<I> = {
     resultCode: number
     messages: string[]
     fieldsErrors: string[]

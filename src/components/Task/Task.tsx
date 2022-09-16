@@ -3,7 +3,7 @@ import {Checkbox, IconButton} from "@material-ui/core";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import {Delete} from "@material-ui/icons";
 import {useDispatch} from "react-redux";
-import {RemoveTask, UpdateTaskStatus, UpdateTaskTitle} from "../../state/actions/task-actions";
+import {RemoveTask, UpdateTask} from "../../state/actions/task-actions";
 
 type PropsType = {
     todolistId: string
@@ -22,13 +22,13 @@ export const Task = React.memo((props: PropsType) => {
             color='primary'
             checked={Boolean(props.status)}
             onChange={useCallback(() => {
-                dispatch(UpdateTaskStatus(props.todolistId, props.taskId))
+                dispatch(UpdateTask(props.todolistId, props.taskId,{status: Number(!Boolean(props.status))}))
             }, [dispatch, props.todolistId, props.taskId])}
         />
         <EditableSpan
             title={props.title}
             onChange={useCallback((title) => {
-                dispatch(UpdateTaskTitle(props.todolistId, props.taskId, title))
+                dispatch(UpdateTask(props.todolistId, props.taskId, {title: title}))
             }, [dispatch, props.todolistId, props.taskId])}/>
         <IconButton
             onClick={useCallback(() => {

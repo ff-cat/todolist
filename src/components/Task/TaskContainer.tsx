@@ -2,7 +2,7 @@ import React from "react";
 import {useSelector} from "react-redux";
 import {RootStateType} from "../../state/store";
 import {Task} from "./Task";
-import {TasksType} from "../../state/reducers/tasks-reducer";
+import {TasksType} from "../../state/types/task-types";
 
 type PropsType = {
     todolistId: string

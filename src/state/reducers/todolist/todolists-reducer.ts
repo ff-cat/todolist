@@ -1,18 +1,7 @@
-import {ACTIONS_TYPE} from "../actions/action-types";
-import {TodolistReducerActionsType} from "../actions/todolist-actions";
-
-export type FilterType = 'all' | 'active' | 'completed'
-
-export type TodolistsType = {
-    id: string
-    addedDate: string
-    order: number
-    title: string
-    filter: FilterType
-}
+import {ACTIONS_TYPE} from "../../types/action-types";
+import {TodolistReducerActionsType, TodolistsType} from "../../types/todolist-types";
 
 const initialState: TodolistsType[] = []
-
 
 export const todolistsReducer = (state: TodolistsType[] = initialState, action: TodolistReducerActionsType): TodolistsType[] => {
     switch (action.type) {

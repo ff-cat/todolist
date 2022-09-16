@@ -6,8 +6,8 @@ import {Delete} from "@material-ui/icons";
 import {useDispatch} from "react-redux";
 import {TaskContainer} from "../Task/TaskContainer";
 import {ChangeTodolistFilterAC, RemoveTodolist, UpdateTodolistTitle,} from "../../state/actions/todolist-actions";
-import {AddTask, SetTasks} from "../../state/actions/task-actions";
-import {FilterType} from "../../state/reducers/todolists-reducer";
+import {AddTask, FetchTasks} from "../../state/actions/task-actions";
+import {FilterType} from "../../state/types/todolist-types";
 
 
 type PropsType = {
@@ -20,7 +20,7 @@ export const Todolist = React.memo((props: PropsType) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(SetTasks(props.todolistId))
+        dispatch(FetchTasks(props.todolistId))
     }, [])
 
     return (

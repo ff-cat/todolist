@@ -1,11 +1,7 @@
 import axios from "axios";
+import {GetTodolistResponseType} from "../state/types/todolist-types";
 
-export type GetTodolistResponseType = {
-    id: string
-    addedDate: string
-    order: number
-    title: string
-}
+
 type ResponseType<I> = {
     resultCode: number
     messages: string[]
