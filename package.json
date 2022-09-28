@@ -2,6 +2,7 @@
   "name": "todolist-13",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://shalaginov-dev.github.io/todolist",
   "dependencies": {
     "@material-ui/core": "^4.11.2",
     "@material-ui/icons": "^4.11.2",
@@ -34,7 +35,9 @@
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "jest:integration": "jest -c integration/jest.config.js",
-    "test:integration": "start-server-and-test storybook http-get://localhost:9009 jest:integration"
+    "test:integration": "start-server-and-test storybook http-get://localhost:9009 jest:integration",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -71,6 +74,7 @@
     "@storybook/node-logger": "^6.3.9",
     "@storybook/preset-create-react-app": "^3.2.0",
     "@storybook/react": "^6.3.9",
+    "gh-pages": "^4.0.0",
     "jest-image-snapshot": "^4.5.1",
     "jest-puppeteer": "^6.1.0",
     "puppeteer": "^13.5.2",
