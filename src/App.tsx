@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from 'react'
 import './App.css'
 import {AddItemForm} from "./components/AddItemForm/AddItemForm";
-import {AppBar, Button, Container, Grid, IconButton, LinearProgress, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Button, Container, Grid, IconButton, LinearProgress, Toolbar} from "@material-ui/core";
 import {Menu} from "@material-ui/icons";
 import {useDispatch} from "react-redux";
 import {TodolistContainer} from "./components/Todolist/TodolistContainer";
