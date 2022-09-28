@@ -23,7 +23,7 @@ export const Task = React.memo((props: PropsType) => {
             checked={Boolean(props.status)}
             onChange={useCallback(() => {
                 dispatch(UpdateTask(props.todolistId, props.taskId,{status: Number(!Boolean(props.status))}))
-            }, [dispatch, props.todolistId, props.taskId])}
+            }, [dispatch, props.todolistId, props.taskId, props.status])}
         />
         <EditableSpan
             title={props.title}
