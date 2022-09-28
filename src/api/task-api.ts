@@ -22,13 +22,13 @@ export const taskAPI = {
     getTasks(todolistId: string) {
         return instance.get<GetTasksResponseType>(`todo-lists/${todolistId}/tasks`)
     },
+    deleteTask(todolistId: string, taskId: string) {
+        return instance.delete<ResponseType<{}>>(`todo-lists/${todolistId}/tasks/${taskId}`)
+    },
     createTask(todolistId: string, title: string) {
         return instance.post<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks`, {title})
     },
     updateTask(todolistId: string, taskId: string, RequestTaskObj: RequestTaskType) {
         return instance.put<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`, RequestTaskObj)
-    },
-    deleteTask(todolistId: string, taskId: string) {
-        return instance.delete<ResponseType<{}>>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
 }

@@ -20,13 +20,10 @@ export const App = () => {
     return (
         <div className='App'>
             <AppBar position='static'>
-                <Toolbar>
+                <Toolbar style={{display: 'flex', justifyContent: 'space-between'}}>
                     <IconButton edge='start' color='inherit' aria-label='menu'>
                         <Menu/>
                     </IconButton>
-                    <Typography variant='h6'>
-                        News
-                    </Typography>
                     <Button color='inherit'>Login</Button>
                 </Toolbar>
             </AppBar>
