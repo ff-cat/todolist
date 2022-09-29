@@ -1,12 +1,12 @@
 import {v1} from "uuid"
-import {tasksReducer} from "./task/tasks-reducer"
+import {tasksReducer} from "../tasks-reducer"
 import {
     AddTaskAC,
     UpdateTaskAC,
     RemoveTaskAC,
-} from "../actions/task-actions";
-import {AddTodolistAC, RemoveTodolistAC} from "../actions/todolist-actions";
-import {TasksType} from "../types/task-types";
+} from "../../actions/task-actions";
+import {AddTodolistAC, RemoveTodolistAC} from "../../actions/todolist-actions";
+import {TasksType} from "../../types/task-types";
 
 let todolistId1: string
 let todolistId2: string

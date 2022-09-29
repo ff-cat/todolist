@@ -1,5 +1,6 @@
 import axios from "axios";
 import {GetTodolistResponseType} from "../state/types/todolist-types";
+import {apiKey} from "./auth-api";
 
 
 type ResponseType<I> = {
@@ -16,7 +17,7 @@ export const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     headers: {
-        'API-KEY': 'f582c58f-0778-4c75-866b-da832054adf0'
+        'API-KEY': apiKey
     },
 })
 

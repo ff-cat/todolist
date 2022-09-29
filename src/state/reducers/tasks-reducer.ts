@@ -1,5 +1,5 @@
-import {ACTIONS_TYPE} from "../../types/action-types";
-import {TaskReducerActionsType, TasksType} from "../../types/task-types";
+import {ACTIONS_TYPE} from "../types/action-types";
+import {TaskReducerActionsType, TasksType} from "../types/task-types";
 
 const initialState: TasksType = {}
 
