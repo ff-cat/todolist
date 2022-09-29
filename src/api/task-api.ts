@@ -1,5 +1,6 @@
 import axios from "axios";
 import {GetTasksResponseType, RequestTaskType, TaskType} from "../state/types/task-types";
+import {apiKey} from "./auth-api";
 
 export type ResponseType<I> = {
     resultCode: number
@@ -14,7 +15,7 @@ export const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     headers: {
-        'API-KEY': 'f272445b-402b-4b0f-ba99-09cb5a98a4e4'
+        'API-KEY': apiKey
     },
 })
 

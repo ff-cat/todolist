@@ -1,8 +1,8 @@
 import {Provider} from "react-redux";
 import {RootStateType} from "../../state/store";
 import {combineReducers, createStore} from "redux";
-import {tasksReducer} from "../../state/reducers/task/tasks-reducer";
-import {todolistsReducer} from "../../state/reducers/todolist/todolists-reducer";
+import {tasksReducer} from "../../state/reducers/tasks-reducer";
+import {todolistsReducer} from "../../state/reducers/todolists-reducer";
 import {v1} from "uuid";
 
 const rootReducer = combineReducers({
@@ -71,6 +71,16 @@ const initialGlobalState = {
     },
     app: {
         status: 'idle'
+    },
+    auth: {
+        id: null,
+        email: null,
+        login: null,
+        isAuth: false,
+        initializationSuccess: false
+    },
+    form: {
+
     }
 };
 

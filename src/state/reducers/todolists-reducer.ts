@@ -1,5 +1,5 @@
-import {ACTIONS_TYPE} from "../../types/action-types";
-import {TodolistReducerActionsType, TodolistsType} from "../../types/todolist-types";
+import {ACTIONS_TYPE} from "../types/action-types";
+import {TodolistReducerActionsType, TodolistsType} from "../types/todolist-types";
 
 const initialState: TodolistsType[] = []
 

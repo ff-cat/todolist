@@ -1,5 +1,5 @@
-import {ACTIONS_TYPE} from "../../types/action-types";
-import {AppReducerActionsTypes, AppType, RequestStatusType} from "../../types/app-types";
+import {ACTIONS_TYPE} from "../types/action-types";
+import {AppReducerActionsTypes, AppType, RequestStatusType} from "../types/app-types";
 
 const initialState: AppType = {
     status: 'idle' as RequestStatusType
