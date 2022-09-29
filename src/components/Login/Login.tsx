@@ -13,7 +13,11 @@ export const Login = () => {
 
     return (
         <div className={s.loginBlock}>
-            <h1>LOGIN</h1>
+            <div>
+                <span>email:</span> fatflycat@gmail.com
+                <p><span>password:</span> qwe123qwe</p>
+            </div>
+            <h1>Sign In</h1>
             <LoginReduxForm onSubmit={onSubmit}/>
         </div>
     )

@@ -16,6 +16,14 @@
     border-radius: 5px;
 }
 
+.loginBlock p {
+    margin: 0;
+}
+
+.loginBlock span{
+    opacity: 50%;
+}
+
 .loginBlock h1 {
     font-size: 23px;
     color: black;
