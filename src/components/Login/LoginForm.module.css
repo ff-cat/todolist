@@ -21,14 +21,13 @@
 }
 
 .loginBlock span{
-    opacity: 50%;
+    /*opacity: 50%;*/
 }
 
 .loginBlock h1 {
     font-size: 23px;
     color: black;
-    opacity: 50%;
-
+    /*opacity: 50%;*/
 }
 
 .email {
