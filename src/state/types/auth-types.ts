@@ -2,24 +2,25 @@ import {ThunkAction} from "redux-thunk";
 import {RootStateType} from "../store";
 import {ACTIONS_TYPE} from "./action-types";
 
-export type AuthType = {
+export interface IAuth {
     id: number | null
     email: string | null
     login: string | null
     isAuth: boolean
     initializationSuccess: boolean
 }
-export type UserDataType = {
+export interface IUserData {
     id: number | null
     email: string | null
     login: string | null
 }
-export type SetUserDataAT = {
+export interface ISetUserData {
     type: ACTIONS_TYPE.SET_USER_DATA
-    payload: { data: UserDataType, isAuth: boolean }
+    payload: { data: IUserData, isAuth: boolean }
 }
-export type InitializationAT = {
+export interface IInitialization {
     type: ACTIONS_TYPE.INITIALIZATION_SUCCESS
 }
-export type AuthActionsType = SetUserDataAT | InitializationAT
+
+export type AuthActionsType = ISetUserData | IInitialization
 export type ThunkType = ThunkAction<Promise<void>, RootStateType, unknown, AuthActionsType>

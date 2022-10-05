@@ -10,17 +10,17 @@ import {AddTask, FetchTasks} from "../../state/actions/task-actions";
 import {FilterType} from "../../state/types/todolist-types";
 
 
-type PropsType = {
+interface IProps  {
     todolistId: string
-    title: string
+    todolistTitle: string
     filter: FilterType
 }
 
-export const Todolist = React.memo((props: PropsType) => {
+export const Todolist = React.memo(({todolistId, todolistTitle, filter}: IProps) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(FetchTasks(props.todolistId))
+        dispatch(FetchTasks(todolistId))
     }, [])
 
     return (
@@ -29,56 +29,56 @@ export const Todolist = React.memo((props: PropsType) => {
                 <div>
                     <h3>
                         <EditableSpan
-                            title={props.title}
-                            onChange={useCallback((title) => {
-                                dispatch(UpdateTodolistTitle(props.todolistId, title))
-                            }, [dispatch, props.todolistId])}
+                            title={todolistTitle}
+                            updateTitleCallback={useCallback((title) => {
+                                dispatch(UpdateTodolistTitle(todolistId, title))
+                            }, [dispatch, todolistId])}
                         />
                         <IconButton
                             onClick={useCallback(() => {
-                                dispatch(RemoveTodolist(props.todolistId))
-                            }, [dispatch, props.todolistId])}
+                                dispatch(RemoveTodolist(todolistId))
+                            }, [dispatch, todolistId])}
                         >
                             <Delete/>
                         </IconButton>
                     </h3>
                 </div>
                 <div>
-                    <AddItemForm addItem={useCallback((title: string) => {
-                        dispatch(AddTask(props.todolistId, title))
-                    }, [dispatch, props.todolistId])}
+                    <AddItemForm addItemCallback={useCallback((title: string) => {
+                        dispatch(AddTask(todolistId, title))
+                    }, [dispatch, todolistId])}
                     />
                 </div>
                 <div>
-                    <TaskContainer todolistId={props.todolistId} filter={props.filter}/>
+                    <TaskContainer todolistId={todolistId} filter={filter}/>
                 </div>
                 <div>
                     <Button
                         onClick={useCallback(() => {
-                            dispatch(ChangeTodolistFilterAC(props.todolistId, 'all'))
-                        }, [dispatch, props.todolistId])}
-                        className={props.filter === 'all' ? 'active-filter' : ''}
-                        variant={props.filter === 'all' ? 'contained' : 'outlined'}
+                            dispatch(ChangeTodolistFilterAC(todolistId, 'all'))
+                        }, [dispatch, todolistId])}
+                        className={filter === 'all' ? 'active-filter' : ''}
+                        variant={filter === 'all' ? 'contained' : 'outlined'}
                         size='small'
                         color='primary'
                     >All
                     </Button>
                     <Button
                         onClick={useCallback(() => {
-                            dispatch(ChangeTodolistFilterAC(props.todolistId, 'active'))
-                        }, [dispatch, props.todolistId])}
-                        className={props.filter === 'active' ? 'active-filter' : ''}
-                        variant={props.filter === 'active' ? 'contained' : 'outlined'}
+                            dispatch(ChangeTodolistFilterAC(todolistId, 'active'))
+                        }, [dispatch, todolistId])}
+                        className={filter === 'active' ? 'active-filter' : ''}
+                        variant={filter === 'active' ? 'contained' : 'outlined'}
                         size='small'
                         color='primary'
                     >Active
                     </Button>
                     <Button
                         onClick={useCallback(() => {
-                            dispatch(ChangeTodolistFilterAC(props.todolistId, 'completed'))
-                        }, [dispatch, props.todolistId])}
-                        className={props.filter === 'completed' ? 'active-filter' : ''}
-                        variant={props.filter === 'completed' ? 'contained' : 'outlined'}
+                            dispatch(ChangeTodolistFilterAC(todolistId, 'completed'))
+                        }, [dispatch, todolistId])}
+                        className={filter === 'completed' ? 'active-filter' : ''}
+                        variant={filter === 'completed' ? 'contained' : 'outlined'}
                         size='small'
                         color='primary'
                     >Completed

@@ -1,14 +1,14 @@
 import {stopSubmit} from "redux-form"
-import {UserDataType, InitializationAT, SetUserDataAT, ThunkType} from "../types/auth-types"
+import {IUserData, IInitialization, ISetUserData, ThunkType} from "../types/auth-types"
 import {ACTIONS_TYPE} from "../types/action-types";
 import {authAPI} from "../../api/auth-api";
 
-export const SetAuthUserData = (data: UserDataType, isAuth: boolean): SetUserDataAT => ({
+export const SetAuthUserData = (data: IUserData, isAuth: boolean): ISetUserData => ({
     type: ACTIONS_TYPE.SET_USER_DATA,
     payload: {data, isAuth},
 })
 
-export const InitializationSuccess = (): InitializationAT => ({
+export const InitializationSuccess = (): IInitialization => ({
     type: ACTIONS_TYPE.INITIALIZATION_SUCCESS
 })
 

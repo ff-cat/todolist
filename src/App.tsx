@@ -14,7 +14,6 @@ import {Preloader} from "./components/Preloader/Preloader";
 export const App = () => {
     const {status} = useAppSelector(state => state.app)
     const {isAuth, initializationSuccess} = useAppSelector(state => state.auth)
-
     const dispatch = useDispatch()
 
     useEffect(() => {

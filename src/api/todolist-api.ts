@@ -1,5 +1,5 @@
 import axios from "axios";
-import {GetTodolistResponseType} from "../state/types/todolist-types";
+import {IGetTodolistResponse} from "../state/types/todolist-types";
 import {apiKey} from "./auth-api";
 
 
@@ -23,13 +23,13 @@ export const instance = axios.create({
 
 export const todolistAPI = {
     getTodolist() {
-        return instance.get<GetTodolistResponseType[]>(`todo-lists`)
+        return instance.get<IGetTodolistResponse[]>(`todo-lists`)
     },
     createTodolist(title: string) {
-        return instance.post<ResponseType<GetTodolistResponseType>>(`todo-lists`, {title})
+        return instance.post<ResponseType<IGetTodolistResponse>>(`todo-lists`, {title})
     },
     updateTodolist(todolistId: string, title: string) {
-        return instance.put<ResponseType<GetTodolistResponseType>>(`todo-lists/${todolistId}`, {title})
+        return instance.put<ResponseType<IGetTodolistResponse>>(`todo-lists/${todolistId}`, {title})
     },
     deleteTodolist(todolistId: string) {
         return instance.delete<ResponseType<{}>>(`todo-lists/${todolistId}`)

@@ -2,36 +2,36 @@ import {ACTIONS_TYPE} from "../types/action-types";
 import {taskAPI} from "../../api/task-api";
 import {RootStateType} from "../store";
 import {
-    AddTaskAT,
-    ChangeTaskTitleAT,
-    RemoveTaskAT,
-    RequestTaskType,
-    SetTasksAT,
-    TaskType,
-    ThunkType, UpdateTaskType
+    IAddTask,
+    IChangeTaskTitle,
+    IRemoveTask,
+    IRequestTask,
+    ISetTasks,
+    ITask,
+    ThunkType, IUpdateTask
 } from "../types/task-types";
 import {SetAppStatus} from "./app-actions";
 
 
-export const RemoveTaskAC = (todolistId: string, taskId: string): RemoveTaskAT => {
+export const RemoveTaskAC = (todolistId: string, taskId: string): IRemoveTask => {
     return {
         type: ACTIONS_TYPE.REMOVE_TASK,
         payload: {todolistId, taskId,},
     }
 }
-export const AddTaskAC = (task: TaskType): AddTaskAT => {
+export const AddTaskAC = (task: ITask): IAddTask => {
     return {
         type: ACTIONS_TYPE.ADD_TASK,
         payload: {task},
     }
 }
-export const UpdateTaskAC = (todolistId: string, taskId: string, model: RequestTaskType): ChangeTaskTitleAT => {
+export const UpdateTaskAC = (todolistId: string, taskId: string, model: IRequestTask): IChangeTaskTitle => {
     return {
         type: ACTIONS_TYPE.UPDATE_TASK,
         payload: {todolistId, taskId, model,},
     }
 }
-export const SetTasksAC = (todolistId: string, tasks: TaskType[]): SetTasksAT => {
+export const SetTasksAC = (todolistId: string, tasks: ITask[]): ISetTasks => {
     return {
         type: ACTIONS_TYPE.SET_TASKS,
         payload: {todolistId, tasks},
@@ -63,14 +63,14 @@ export const AddTask = (todolistId: string, title: string): ThunkType => {
         dispatch(SetAppStatus('succeeded'))
     }
 }
-export const UpdateTask = (todolistId: string, taskId: string, domainModel: UpdateTaskType): ThunkType => {
+export const UpdateTask = (todolistId: string, taskId: string, domainModel: IUpdateTask): ThunkType => {
     return async (dispatch, getState: () => RootStateType) => {
         dispatch(SetAppStatus('loading'))
         const task = getState().tasks[todolistId].find(t => t.id === taskId)
         if (!task) {
             return
         }
-        const apiModel: RequestTaskType = {
+        const apiModel: IRequestTask = {
             title: task.title,
             description: task.description,
             status: task.status,

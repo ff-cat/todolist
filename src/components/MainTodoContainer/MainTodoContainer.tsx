@@ -11,14 +11,14 @@ export const MainTodoContainer = () => {
     const {isAuth} = useAppSelector(state => state.auth)
     const dispatch = useDispatch()
 
-    const addTodolist = useCallback((title) => {
+    const onAddTodolist = useCallback((title) => {
         dispatch(AddTodolist(title))
     }, [dispatch])
 
     return isAuth ? (
         <Container fixed>
             <Grid container style={{padding: '20px'}}>
-                <AddItemForm addItem={addTodolist}/>
+                <AddItemForm addItemCallback={onAddTodolist}/>
             </Grid>
             <TodolistContainer/>
         </Container>

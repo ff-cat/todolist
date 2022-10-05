@@ -1,9 +1,9 @@
 import {ACTIONS_TYPE} from "../types/action-types";
-import {TodolistReducerActionsType, TodolistsType} from "../types/todolist-types";
+import {TodolistReducerActionsType, ITodolists} from "../types/todolist-types";
 
-const initialState: TodolistsType[] = []
+const initialState: ITodolists[] = []
 
-export const todolistsReducer = (state: TodolistsType[] = initialState, action: TodolistReducerActionsType): TodolistsType[] => {
+export const todolistsReducer = (state: ITodolists[] = initialState, action: TodolistReducerActionsType): ITodolists[] => {
     switch (action.type) {
         case ACTIONS_TYPE.REMOVE_TODOLIST:
             return state.filter(s => s.id !== action.payload.todolistId)

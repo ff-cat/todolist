@@ -1,33 +1,28 @@
 import React from "react";
-import {useSelector} from "react-redux";
-import {RootStateType} from "../../state/store";
 import {Task} from "./Task";
-import {TasksType} from "../../state/types/task-types";
+import {useAppSelector} from "../../state/hooks";
 
-type PropsType = {
+interface IProps  {
     todolistId: string
     filter: string
 }
 
-export const TaskContainer = React.memo((props: PropsType) => {
-    const tasks = useSelector<RootStateType, TasksType>(state => state.tasks)
+export const TaskContainer = React.memo(({todolistId, filter}: IProps) => {
+    const tasks = useAppSelector(state => state.tasks)
 
-    let tasksForTodolist = tasks[props.todolistId]
-    if (props.filter === 'active') {
-        tasksForTodolist = tasks[props.todolistId].filter(t => !Boolean(t.status))
-    }
-    if (props.filter === 'completed') {
-        tasksForTodolist = tasks[props.todolistId].filter(t => Boolean(t.status))
-    }
+    let tasksForTodolist = tasks[todolistId]
+    if (filter === 'active') tasksForTodolist = tasks[todolistId].filter(t => !Boolean(t.status))
+    if (filter === 'completed') tasksForTodolist = tasks[todolistId].filter(t => Boolean(t.status))
+
     return (
         <div>
             {
                 tasksForTodolist.map(task =>
                     <Task
                         key={task.id}
-                        todolistId={props.todolistId}
+                        todolistId={todolistId}
                         taskId={task.id}
-                        title={task.title}
+                        taskTitle={task.title}
                         status={task.status}
                     />
                 )

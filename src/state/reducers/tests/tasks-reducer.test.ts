@@ -6,11 +6,11 @@ import {
     RemoveTaskAC,
 } from "../../actions/task-actions";
 import {AddTodolistAC, RemoveTodolistAC} from "../../actions/todolist-actions";
-import {TasksType} from "../../types/task-types";
+import {ITasks} from "../../types/task-types";
 
 let todolistId1: string
 let todolistId2: string
-let startState: TasksType = {}
+let startState: ITasks = {}
 
 beforeEach(() => {
     todolistId1 = v1()

@@ -6,11 +6,11 @@ import {
     ChangeTodolistTitleAC,
     RemoveTodolistAC
 } from "../../actions/todolist-actions";
-import {TodolistsType} from "../../types/todolist-types";
+import {ITodolists} from "../../types/todolist-types";
 
 let todolistId1: string
 let todolistId2: string
-let startState: TodolistsType[] = []
+let startState: ITodolists[] = []
 
 beforeEach(() => {
     todolistId1 = v1()
