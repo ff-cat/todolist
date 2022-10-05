@@ -1,7 +1,8 @@
 import axios from "axios";
-import {GetTasksResponseType, RequestTaskType, TaskType} from "../state/types/task-types";
+import {IGetTasksResponse, IRequestTask, ITask} from "../state/types/task-types";
+import {apiKey} from "./auth-api";
 
-export type ResponseType<I> = {
+interface IResponse<I> {
     resultCode: number
     messages: string[]
     fieldsErrors: string[]
@@ -14,21 +15,21 @@ export const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     headers: {
-        'API-KEY': 'f272445b-402b-4b0f-ba99-09cb5a98a4e4'
+        'API-KEY': apiKey
     },
 })
 
 export const taskAPI = {
     getTasks(todolistId: string) {
-        return instance.get<GetTasksResponseType>(`todo-lists/${todolistId}/tasks`)
+        return instance.get<IGetTasksResponse>(`todo-lists/${todolistId}/tasks`)
     },
     deleteTask(todolistId: string, taskId: string) {
-        return instance.delete<ResponseType<{}>>(`todo-lists/${todolistId}/tasks/${taskId}`)
+        return instance.delete<IResponse<{}>>(`todo-lists/${todolistId}/tasks/${taskId}`)
     },
     createTask(todolistId: string, title: string) {
-        return instance.post<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks`, {title})
+        return instance.post<IResponse<ITask>>(`todo-lists/${todolistId}/tasks`, {title})
     },
-    updateTask(todolistId: string, taskId: string, RequestTaskObj: RequestTaskType) {
-        return instance.put<ResponseType<TaskType>>(`todo-lists/${todolistId}/tasks/${taskId}`, RequestTaskObj)
+    updateTask(todolistId: string, taskId: string, RequestTaskObj: IRequestTask) {
+        return instance.put<IResponse<ITask>>(`todo-lists/${todolistId}/tasks/${taskId}`, RequestTaskObj)
     },
 }

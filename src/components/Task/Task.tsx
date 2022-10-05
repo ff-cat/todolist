@@ -5,35 +5,35 @@ import {Delete} from "@material-ui/icons";
 import {useDispatch} from "react-redux";
 import {RemoveTask, UpdateTask} from "../../state/actions/task-actions";
 
-type PropsType = {
+interface IProps  {
     todolistId: string
     taskId: string
-    title: string
+    taskTitle: string
     status: number
 }
 
-export const Task = React.memo((props: PropsType) => {
+export const Task = React.memo(({todolistId, taskId, taskTitle, status}: IProps) => {
     const dispatch = useDispatch()
 
     return <div
-        key={props.taskId}
-        className={props.status ? 'is-done' : ''}>
+        key={taskId}
+        className={status ? 'is-done' : ''}>
         <Checkbox
             color='primary'
-            checked={Boolean(props.status)}
+            checked={Boolean(status)}
             onChange={useCallback(() => {
-                dispatch(UpdateTask(props.todolistId, props.taskId,{status: Number(!Boolean(props.status))}))
-            }, [dispatch, props.todolistId, props.taskId, props.status])}
+                dispatch(UpdateTask(todolistId, taskId,{status: Number(!Boolean(status))}))
+            }, [dispatch, todolistId, taskId, status])}
         />
         <EditableSpan
-            title={props.title}
-            onChange={useCallback((title) => {
-                dispatch(UpdateTask(props.todolistId, props.taskId, {title: title}))
-            }, [dispatch, props.todolistId, props.taskId])}/>
+            title={taskTitle}
+            updateTitleCallback={useCallback((title) => {
+                dispatch(UpdateTask(todolistId, taskId, {title: title}))
+            }, [dispatch, todolistId, taskId])}/>
         <IconButton
             onClick={useCallback(() => {
-                dispatch(RemoveTask(props.todolistId, props.taskId))
-            }, [dispatch, props.todolistId, props.taskId])}>
+                dispatch(RemoveTask(todolistId, taskId))
+            }, [dispatch, todolistId, taskId])}>
             <Delete/>
         </IconButton>
     </div>

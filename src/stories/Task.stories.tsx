@@ -18,7 +18,7 @@ const Task = React.memo((props: any) => {
         />
         <EditableSpan
             title={props.title}
-            onChange={titleCallback}/>
+            updateTitleCallback={titleCallback}/>
         <IconButton
             onClick={()=>{deleteCallback(props.title)}}>
             <Delete/>

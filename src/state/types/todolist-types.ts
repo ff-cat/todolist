@@ -1,63 +1,62 @@
 import {RootStateType} from "../store";
 import {ACTIONS_TYPE} from "./action-types";
 import {ThunkAction} from "redux-thunk";
+import {ISetAppStatus} from "./app-types";
 
-export type FilterType = 'all' | 'active' | 'completed'
 
-export type TodolistsType = {
+export interface ITodolists {
     id: string
     addedDate: string
     order: number
     title: string
     filter: FilterType
 }
-
-export type GetTodolistResponseType = {
+export interface IGetTodolistResponse {
     id: string
     addedDate: string
     order: number
     title: string
 }
-
-export type RemoveTodolistAT = {
+export interface IRemoveTodolist {
     type: ACTIONS_TYPE.REMOVE_TODOLIST
     payload: {
         todolistId: string
     }
 }
-export type AddTodolistAT = {
+export interface IAddTodolist {
     type: ACTIONS_TYPE.ADD_TODOLIST
     payload: {
         todolistId: string
         title: string
     }
 }
-export type ChangeTodolistTitleAT = {
+export interface IChangeTodolistTitle {
     type: ACTIONS_TYPE.CHANGE_TODOLIST_TITLE
     payload: {
         todolistId: string
         title: string
     }
 }
-export type ChangeTodolistFilterAT = {
+export interface IChangeTodolistFilter {
     type: ACTIONS_TYPE.CHANGE_TODOLIST_FILTER
     payload: {
         todolistId: string
         filter: FilterType
     }
 }
-export type SetTodolistsAT = {
+export interface ISetTodolists {
     type: ACTIONS_TYPE.SET_TODOLISTS
     payload: {
-        todolists: GetTodolistResponseType[]
+        todolists: IGetTodolistResponse[]
     }
 }
+
 export type TodolistReducerActionsType =
-    RemoveTodolistAT
-    | AddTodolistAT
-    | ChangeTodolistTitleAT
-    | ChangeTodolistFilterAT
-    | SetTodolistsAT
-
-
+    IRemoveTodolist
+    | IAddTodolist
+    | IChangeTodolistTitle
+    | IChangeTodolistFilter
+    | ISetTodolists
+    | ISetAppStatus
+export type FilterType = 'all' | 'active' | 'completed'
 export type ThunkType = ThunkAction<Promise<void>, RootStateType, unknown, TodolistReducerActionsType>

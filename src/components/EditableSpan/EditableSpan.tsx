@@ -1,32 +1,32 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {TextField} from "@material-ui/core";
 
-type PropsType = {
+interface IProps  {
     title: string
-    onChange: (value: string) => void
+    updateTitleCallback: (value: string) => void
 }
 
-export const EditableSpan = React.memo((props: PropsType) => {
+export const EditableSpan = React.memo(({title, updateTitleCallback}: IProps) => {
     const [editMode, setEditMode] = useState(false)
-    const [title, setTitle] = useState('')
+    const [tempTitle, setTempTitle] = useState('')
 
     const activateEditMode = () => {
         setEditMode(true)
-        setTitle(props.title)
+        setTempTitle(title)
     }
     const activateViewMode = () => {
         setEditMode(false)
-        if (title !== props.title){
-            props.onChange(title)
+        if (tempTitle !== title){
+            updateTitleCallback(tempTitle)
         }
     }
     const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
+        setTempTitle(e.currentTarget.value)
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.charCode === 13){
             setEditMode(false)
-            props.onChange(title)
+            updateTitleCallback(tempTitle)
         }
 
     }
@@ -37,12 +37,12 @@ export const EditableSpan = React.memo((props: PropsType) => {
             ?
             <TextField
                 size='small'
-                value={title}
+                value={tempTitle}
                 onChange={onChangeTitleHandler}
                 onBlur={activateViewMode}
                 autoFocus
                 onKeyPress={onKeyPressHandler}
             />
-            : <span onDoubleClick={activateEditMode}>{props.title}</span>
+            : <span onDoubleClick={activateEditMode}>{title}</span>
     )
 })

@@ -1,8 +1,9 @@
 import axios from "axios";
-import {GetTodolistResponseType} from "../state/types/todolist-types";
+import {IGetTodolistResponse} from "../state/types/todolist-types";
+import {apiKey} from "./auth-api";
 
 
-type ResponseType<I> = {
+interface IResponse<I> {
     resultCode: number
     messages: string[]
     fieldsErrors: string[]
@@ -16,22 +17,22 @@ export const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.1/',
     headers: {
-        'API-KEY': 'f272445b-402b-4b0f-ba99-09cb5a98a4e4'
+        'API-KEY': apiKey
     },
 })
 
 export const todolistAPI = {
     getTodolist() {
-        return instance.get<GetTodolistResponseType[]>(`todo-lists`)
+        return instance.get<IGetTodolistResponse[]>(`todo-lists`)
     },
     createTodolist(title: string) {
-        return instance.post<ResponseType<GetTodolistResponseType>>(`todo-lists`, {title})
+        return instance.post<IResponse<IGetTodolistResponse>>(`todo-lists`, {title})
     },
     updateTodolist(todolistId: string, title: string) {
-        return instance.put<ResponseType<GetTodolistResponseType>>(`todo-lists/${todolistId}`, {title})
+        return instance.put<IResponse<IGetTodolistResponse>>(`todo-lists/${todolistId}`, {title})
     },
     deleteTodolist(todolistId: string) {
-        return instance.delete<ResponseType<{}>>(`todo-lists/${todolistId}`)
+        return instance.delete<IResponse<{}>>(`todo-lists/${todolistId}`)
     }
 }
 

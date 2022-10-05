@@ -1,9 +1,10 @@
 import {ACTIONS_TYPE} from "./action-types";
 import {ThunkAction} from "redux-thunk";
 import {RootStateType} from "../store";
-import {AddTodolistAT, RemoveTodolistAT, SetTodolistsAT} from "./todolist-types";
+import {IAddTodolist, IRemoveTodolist, ISetTodolists} from "./todolist-types";
+import {ISetAppStatus} from "./app-types";
 
-export type TaskType = {
+export interface ITask {
     addedDate: string
     deadline: string | null
     description: string | null
@@ -15,7 +16,7 @@ export type TaskType = {
     title: string
     todoListId: string
 }
-export type RequestTaskType = {
+export interface IRequestTask {
     title: string
     description: string | null
     status: number
@@ -23,17 +24,15 @@ export type RequestTaskType = {
     startDate: string | null
     deadline: string | null
 }
-export type GetTasksResponseType = {
+export interface IGetTasksResponse {
     error: string | null
     totalCount: number
-    items: TaskType[]
+    items: ITask[]
 }
-
-export type TasksType = {
-    [key: string]: TaskType[]
+export interface ITasks {
+    [key: string]: ITask[]
 }
-
-export type UpdateTaskType = {
+export interface IUpdateTask {
     title?: string
     description?: string | null
     status?: number
@@ -41,43 +40,43 @@ export type UpdateTaskType = {
     startDate?: string | null
     deadline?: string | null
 }
-
-export type RemoveTaskAT = {
+export interface IRemoveTask {
     type: ACTIONS_TYPE.REMOVE_TASK
     payload: {
         todolistId: string
         taskId: string
     }
 }
-export type AddTaskAT = {
+export interface IAddTask {
     type: ACTIONS_TYPE.ADD_TASK
     payload: {
-        task: TaskType
+        task: ITask
     }
 }
-export type ChangeTaskTitleAT = {
+export interface IChangeTaskTitle {
     type: ACTIONS_TYPE.UPDATE_TASK
     payload: {
         todolistId: string
         taskId: string
-        model: RequestTaskType
+        model: IRequestTask
     }
 }
-export type SetTasksAT = {
+export interface ISetTasks {
     type: ACTIONS_TYPE.SET_TASKS
     payload: {
-        tasks: TaskType[]
+        tasks: ITask[]
         todolistId: string
     }
 }
-export type TaskReducerActionsType =
-    RemoveTaskAT
-    | AddTaskAT
-    | ChangeTaskTitleAT
-    | AddTodolistAT
-    | RemoveTodolistAT
-    | SetTodolistsAT
-    | SetTasksAT
 
+export type TaskReducerActionsType =
+    IRemoveTask
+    | IAddTask
+    | IChangeTaskTitle
+    | IAddTodolist
+    | IRemoveTodolist
+    | ISetTodolists
+    | ISetTasks
+    | ISetAppStatus
 export type ThunkType = ThunkAction<Promise<void>, RootStateType, unknown, TaskReducerActionsType>
 

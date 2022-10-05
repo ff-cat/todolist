@@ -3,28 +3,28 @@ import {IconButton, TextField} from "@material-ui/core";
 import {AddBox} from "@material-ui/icons";
 
 
-type PropsType = {
-    addItem: (title: string) => void
+interface IProps  {
+    addItemCallback: (title: string) => void
 }
 
-export const AddItemForm = React.memo((props: PropsType) => {
-    const [title, setTitle] = useState('')
+export const AddItemForm = React.memo(({addItemCallback}: IProps) => {
+    const [tempTitle, setTempTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
-    const addItem = () => {
-        if (title.trim() !== '') {
-            props.addItem(title)
-            setTitle('')
+    const onAddItem = () => {
+        if (tempTitle.trim() !== '') {
+            addItemCallback(tempTitle)
+            setTempTitle('')
         } else {
             setError('Title is required')
         }
     }
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.currentTarget.value)
+        setTempTitle(e.currentTarget.value)
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         error !== null && setError(null)
-        e.charCode === 13 && addItem()
+        e.charCode === 13 && onAddItem()
     }
 
     return (
@@ -33,14 +33,14 @@ export const AddItemForm = React.memo((props: PropsType) => {
                 variant='outlined'
                 size='small'
                 label='Title'
-                value={title}
+                value={tempTitle}
                 error={!!error}
                 helperText={error}
                 onChange={onChangeHandler}
                 onKeyPress={onKeyPressHandler}
             />
 
-            <IconButton color='primary' onClick={addItem}>
+            <IconButton color='primary' onClick={onAddItem}>
                 <AddBox/>
             </IconButton>
         </div>

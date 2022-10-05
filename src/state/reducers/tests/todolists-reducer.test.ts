@@ -1,16 +1,16 @@
-import {todolistsReducer} from './todolist/todolists-reducer';
+import {todolistsReducer} from '../todolists-reducer';
 import {v1} from 'uuid';
 import {
     AddTodolistAC,
     ChangeTodolistFilterAC,
     ChangeTodolistTitleAC,
     RemoveTodolistAC
-} from "../actions/todolist-actions";
-import {TodolistsType} from "../types/todolist-types";
+} from "../../actions/todolist-actions";
+import {ITodolists} from "../../types/todolist-types";
 
 let todolistId1: string
 let todolistId2: string
-let startState: TodolistsType[] = []
+let startState: ITodolists[] = []
 
 beforeEach(() => {
     todolistId1 = v1()

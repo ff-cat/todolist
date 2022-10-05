@@ -1,9 +1,9 @@
-import {ACTIONS_TYPE} from "../../types/action-types";
-import {TaskReducerActionsType, TasksType} from "../../types/task-types";
+import {ACTIONS_TYPE} from "../types/action-types";
+import {TaskReducerActionsType, ITasks} from "../types/task-types";
 
-const initialState: TasksType = {}
+const initialState: ITasks = {}
 
-export const tasksReducer = (state: TasksType = initialState, action: TaskReducerActionsType): TasksType => {
+export const tasksReducer = (state: ITasks = initialState, action: TaskReducerActionsType): ITasks => {
     switch (action.type) {
         case ACTIONS_TYPE.SET_TASKS:
             return {...state, [action.payload.todolistId]: action.payload.tasks.map(t => ({...t})) }
