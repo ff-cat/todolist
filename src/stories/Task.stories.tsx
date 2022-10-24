@@ -1,8 +1,8 @@
 import {action} from "@storybook/addon-actions";
 import React from "react";
-import {Checkbox, IconButton} from "@material-ui/core";
+import {Checkbox, IconButton} from "@mui/material";
 import {EditableSpan} from "../components/EditableSpan/EditableSpan";
-import {Delete} from "@material-ui/icons";
+import {Delete} from "@mui/icons-material";
 
 const checkboxCallback = action('Status changed')
 const titleCallback = action('Title changed')

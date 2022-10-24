@@ -1,11 +1,11 @@
 import React, {useEffect} from "react";
-import {Grid, Paper} from "@material-ui/core";
+import {Grid, Paper} from "@mui/material";
 import {Todolist} from "./Todolist";
 import {useDispatch} from "react-redux";
 import {FetchTodolists} from "../../state/actions/todolist-actions";
 import {useAppSelector} from "../../state/hooks";
 
-export const TodolistContainer = React.memo(() => {
+export const TodolistContainer = () => {
     const todolists = useAppSelector(state => state.todolists)
     const dispatch = useDispatch()
 
@@ -33,4 +33,4 @@ export const TodolistContainer = React.memo(() => {
             }
         </Grid>
     )
-})
+}

@@ -1,14 +1,15 @@
 import React, {useEffect} from 'react'
 import './App.css'
-import {AppBar, Button, IconButton, LinearProgress, Toolbar} from "@material-ui/core";
-import {Menu} from "@material-ui/icons";
 import {useAppSelector} from "./state/hooks";
 import {LoginContainer} from "./components/Login/LoginContainer";
 import {Routes, Navigate, Route} from 'react-router-dom';
 import {MainTodoContainer} from "./components/MainTodoContainer/MainTodoContainer";
 import {FetchAuthUserData, LogOut} from "./state/actions/auth-actions";
 import {useDispatch} from "react-redux";
-import {Preloader} from "./components/Preloader/Preloader";
+import {Preloader} from "./components/Common/Preloader/Preloader";
+import {AppBar, Button, IconButton, LinearProgress, Toolbar} from "@mui/material";
+import {Menu} from "@mui/icons-material";
+import {ErrorSnackbar} from "./components/Common/ErrorSnackbar/ErrorSnackbar";
 
 
 export const App = () => {
@@ -24,6 +25,7 @@ export const App = () => {
     return !initializationSuccess
         ? <Preloader/>
         : <div className='App'>
+            <ErrorSnackbar/>
             <AppBar position='static'>
                 <Toolbar style={{display: 'flex', justifyContent: 'space-between'}}>
                     <IconButton edge='start' color='inherit' aria-label='menu'>

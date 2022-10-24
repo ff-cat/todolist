@@ -1,8 +1,8 @@
 import React from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import s from "./LoginForm.module.css";
-import {requiredField} from "./validators";
-import {Input} from "./FormsControls/FormsControls";
+import {requiredField} from "../Common/validators";
+import {Input} from "../Common/FormsControls/FormsControls";
 
 export interface IFormData {
     email: string
