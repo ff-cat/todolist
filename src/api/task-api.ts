@@ -2,7 +2,7 @@ import axios from "axios";
 import {IGetTasksResponse, IRequestTask, ITask} from "../state/types/task-types";
 import {apiKey} from "./auth-api";
 
-export interface IResponse<I> {
+interface IResponse<I> {
     resultCode: number
     messages: string[]
     fieldsErrors: string[]

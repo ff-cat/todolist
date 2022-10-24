@@ -1,0 +1,39 @@
+.preloaderWrapper {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    z-index: 3;
+    transition: 1s all;
+    opacity: 75%;
+}
+
+.loader{
+    height: 130px;
+    width: 130px;
+    border: 13px solid white;
+    border-radius: 50%;
+    border-top-color: #464646;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    animation: 1s spin infinite linear;
+}
+
+@keyframes spin {
+    from{
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/*.preloaderWrapper img {*/
+/*    margin: 0;*/
+/*    height: 150px;*/
+/*    width: 150px;*/
+/*}*/

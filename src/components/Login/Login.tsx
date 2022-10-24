@@ -1,5 +1,5 @@
 import React from "react";
-import {FormDataType, LoginReduxForm} from "./LoginForm";
+import {IFormData, LoginReduxForm} from "./LoginForm";
 import s from './LoginForm.module.css'
 import {LogIn} from "../../state/actions/auth-actions";
 import {useDispatch} from "react-redux";
@@ -7,7 +7,7 @@ import {useDispatch} from "react-redux";
 
 export const Login = () => {
     const dispatch = useDispatch()
-    const onSubmit = (formData: FormDataType) => {
+    const onSubmit = (formData: IFormData) => {
         dispatch(LogIn(formData.email, formData.password, formData.rememberMe))
     }
 

@@ -1,7 +1,8 @@
 import {AuthActionsType, IAuth} from "../types/auth-types";
 import {ACTIONS_TYPE} from "../types/action-types";
 
-let initialState: IAuth = {
+
+const initialState: IAuth = {
     id: null,
     email: null,
     login: null,

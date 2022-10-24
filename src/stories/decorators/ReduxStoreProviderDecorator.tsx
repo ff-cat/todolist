@@ -1,13 +1,18 @@
 import {Provider} from "react-redux";
 import {RootStateType} from "../../state/store";
-import {combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, createStore} from "redux";
 import {tasksReducer} from "../../state/reducers/tasks-reducer";
 import {todolistsReducer} from "../../state/reducers/todolists-reducer";
 import {v1} from "uuid";
+import thunkMiddleware from "redux-thunk";
+import {appReducer} from "../../state/reducers/app-reducer";
+import {authReducer} from "../../state/reducers/auth-reducer";
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
-    todolists: todolistsReducer
+    todolists: todolistsReducer,
+    app: appReducer,
+    auth: authReducer,
 })
 
 const initialGlobalState = {
@@ -70,7 +75,8 @@ const initialGlobalState = {
         ]
     },
     app: {
-        status: 'idle'
+        status: 'idle',
+        error: null
     },
     auth: {
         id: null,
@@ -84,7 +90,7 @@ const initialGlobalState = {
     }
 };
 
-export const storyBookStore = createStore(rootReducer, initialGlobalState as RootStateType);
+export const storyBookStore = createStore(rootReducer, initialGlobalState as RootStateType, applyMiddleware(thunkMiddleware));
 
 export const ReduxStoreProviderDecorator = (storyFn: any) => {
     return <Provider store={storyBookStore}> {storyFn()}</Provider>

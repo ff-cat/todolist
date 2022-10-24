@@ -1,0 +1,23 @@
+
+.formControl.error input,
+.formControl.error textarea {
+    border: 2px solid #ff9999;
+    border-radius: 5px;
+
+}
+
+.formControl.error span {
+    padding: 1px;
+    border: 2px red solid;
+    border-top: 0;
+    border-radius: 0 0 5px 5px;
+    opacity: 70%;
+    color: #ff3a3a;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.input {
+    border-radius: 6px;
+    padding-left: 5px;
+}

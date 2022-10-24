@@ -1,4 +1,4 @@
-import {Container, Grid} from "@material-ui/core";
+import {Container, Grid} from "@mui/material";
 import {AddItemForm} from "../AddItemForm/AddItemForm";
 import React, {useCallback} from "react";
 import {AddTodolist} from "../../state/actions/todolist-actions";

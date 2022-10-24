@@ -3,7 +3,7 @@ import {IGetTodolistResponse} from "../state/types/todolist-types";
 import {apiKey} from "./auth-api";
 
 
-type ResponseType<I> = {
+interface IResponse<I> {
     resultCode: number
     messages: string[]
     fieldsErrors: string[]
@@ -26,13 +26,13 @@ export const todolistAPI = {
         return instance.get<IGetTodolistResponse[]>(`todo-lists`)
     },
     createTodolist(title: string) {
-        return instance.post<ResponseType<IGetTodolistResponse>>(`todo-lists`, {title})
+        return instance.post<IResponse<IGetTodolistResponse>>(`todo-lists`, {title})
     },
     updateTodolist(todolistId: string, title: string) {
-        return instance.put<ResponseType<IGetTodolistResponse>>(`todo-lists/${todolistId}`, {title})
+        return instance.put<IResponse<IGetTodolistResponse>>(`todo-lists/${todolistId}`, {title})
     },
     deleteTodolist(todolistId: string) {
-        return instance.delete<ResponseType<{}>>(`todo-lists/${todolistId}`)
+        return instance.delete<IResponse<{}>>(`todo-lists/${todolistId}`)
     }
 }
 

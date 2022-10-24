@@ -1,19 +1,19 @@
 import React from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import s from "./LoginForm.module.css";
-import {requiredField} from "./validators";
-import {Input} from "./FormsControls/FormsControls";
-
-export type FormDataType = {
+import {requiredField} from "../Common/validators";
+import {Input} from "../Common/FormsControls/FormsControls";
+export interface IFormData {
     email: string
     password: string
     rememberMe: boolean
 }
 
-export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+
+export const LoginForm: React.FC<InjectedFormProps<IFormData>> = ({handleSubmit, error,}) => {
     return (
         <div className={s.LoginReduxForm}>
-            <form onSubmit={props.handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <div className={s.email}>
                     <Field
                         component={Input}
@@ -39,7 +39,7 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
                     /> remember me
                 </div>
                 {
-                    props.error && <div className={s.formError}>{props.error}</div>
+                    error && <div className={s.formError}>{error}</div>
                 }
                 <div className={s.loginButton}>
                     <button>Sign in</button>
@@ -49,4 +49,4 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     )
 }
 
-export const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
+export const LoginReduxForm = reduxForm<IFormData>({form: 'login'})(LoginForm)
