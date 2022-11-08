@@ -1,7 +1,7 @@
 import {RootStateType} from "../store";
 import {ACTIONS_TYPE} from "./action-types";
 import {ThunkAction} from "redux-thunk";
-import {ISetAppStatus} from "./app-types";
+import {ISetAppError, ISetAppStatus} from "./app-types";
 
 
 export interface ITodolists {
@@ -58,5 +58,6 @@ export type TodolistReducerActionsType =
     | IChangeTodolistFilter
     | ISetTodolists
     | ISetAppStatus
+    | ISetAppError
 export type FilterType = 'all' | 'active' | 'completed'
 export type ThunkType = ThunkAction<Promise<void>, RootStateType, unknown, TodolistReducerActionsType>

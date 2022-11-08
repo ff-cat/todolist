@@ -24,12 +24,12 @@ export const taskAPI = {
         return instance.get<IGetTasksResponse>(`todo-lists/${todolistId}/tasks`)
     },
     deleteTask(todolistId: string, taskId: string) {
-        return instance.delete<IResponse<{}>>(`todo-lists/${todolistId}/tasks/${taskId}`)
+        return instance.delete<IResponse<{}>>(`todo-lists/${todolistId}/tasks/${taskId}`).then(res=> res.data)
     },
     createTask(todolistId: string, title: string) {
-        return instance.post<IResponse<ITask>>(`todo-lists/${todolistId}/tasks`, {title})
+        return instance.post<IResponse<ITask>>(`todo-lists/${todolistId}/tasks`, {title}).then(res=> res.data)
     },
     updateTask(todolistId: string, taskId: string, RequestTaskObj: IRequestTask) {
-        return instance.put<IResponse<ITask>>(`todo-lists/${todolistId}/tasks/${taskId}`, RequestTaskObj)
+        return instance.put<IResponse<ITask>>(`todo-lists/${todolistId}/tasks/${taskId}`, RequestTaskObj).then(res=> res.data)
     },
 }

@@ -26,13 +26,13 @@ export const todolistAPI = {
         return instance.get<IGetTodolistResponse[]>(`todo-lists`)
     },
     createTodolist(title: string) {
-        return instance.post<IResponse<IGetTodolistResponse>>(`todo-lists`, {title})
+        return instance.post<IResponse<IGetTodolistResponse>>(`todo-lists`, {title}).then(res => res.data)
     },
     updateTodolist(todolistId: string, title: string) {
-        return instance.put<IResponse<IGetTodolistResponse>>(`todo-lists/${todolistId}`, {title})
+        return instance.put<IResponse<IGetTodolistResponse>>(`todo-lists/${todolistId}`, {title}).then(res => res.data)
     },
     deleteTodolist(todolistId: string) {
-        return instance.delete<IResponse<{}>>(`todo-lists/${todolistId}`)
+        return instance.delete<IResponse<{}>>(`todo-lists/${todolistId}`).then(res => res.data)
     }
 }
 

@@ -7,7 +7,7 @@ import {
     FilterType, IGetTodolistResponse,
     IRemoveTodolist, ISetTodolists, ThunkType
 } from "../types/todolist-types";
-import {SetAppStatus} from "./app-actions";
+import {SetAppError, SetAppStatus} from "./app-actions";
 
 
 export const RemoveTodolistAC = (todolistId: string): IRemoveTodolist => {
@@ -53,7 +53,7 @@ export const RemoveTodolist = (todolistId: string): ThunkType => {
     return async (dispatch) => {
         dispatch(SetAppStatus('loading'))
         const data = await todolistAPI.deleteTodolist(todolistId)
-        data.status === 200 && dispatch(RemoveTodolistAC(todolistId))
+        data.resultCode === 0 && dispatch(RemoveTodolistAC(todolistId))
         dispatch(SetAppStatus('succeeded'))
     }
 }
@@ -61,15 +61,21 @@ export const AddTodolist = (title: string): ThunkType => {
     return async (dispatch) => {
         dispatch(SetAppStatus('loading'))
         const data = await todolistAPI.createTodolist(title)
-        data.status === 200 && dispatch(AddTodolistAC(data.data.data.item.id, title))
-        dispatch(SetAppStatus('succeeded'))
+        if (data.resultCode === 0){
+            dispatch(AddTodolistAC(data.data.item.id, title))
+            dispatch(SetAppStatus('succeeded'))
+        } else {
+            dispatch(SetAppError(data.messages[0]))
+            dispatch(SetAppStatus('succeeded'))
+        }
+
     }
 }
 export const UpdateTodolistTitle = (todolistId: string, title: string): ThunkType => {
     return async (dispatch) => {
         dispatch(SetAppStatus('loading'))
         const data = await todolistAPI.updateTodolist(todolistId, title)
-        data.status === 200 && dispatch(ChangeTodolistTitleAC(todolistId, title))
+        data.resultCode === 0 && dispatch(ChangeTodolistTitleAC(todolistId, title))
         dispatch(SetAppStatus('succeeded'))
     }
 }

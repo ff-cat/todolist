@@ -5,7 +5,7 @@ import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
 import {RemoveTask, UpdateTask} from "../../state/actions/task-actions";
 
-interface IProps  {
+interface IProps {
     todolistId: string
     taskId: string
     taskTitle: string
@@ -15,26 +15,26 @@ interface IProps  {
 export const Task = React.memo(({todolistId, taskId, taskTitle, status}: IProps) => {
     const dispatch = useDispatch()
 
-    return <div
-        key={taskId}
-        className={status ? 'is-done' : ''}>
-        <Checkbox
-            color='primary'
-            checked={Boolean(status)}
-            onChange={useCallback(() => {
-                dispatch(UpdateTask(todolistId, taskId,{status: Number(!status)}))
-            }, [dispatch, todolistId, taskId, status])}
-        />
-        <EditableSpan
-            title={taskTitle}
-            updateTitleCallback={useCallback((title) => {
-                dispatch(UpdateTask(todolistId, taskId, {title: title}))
-            }, [dispatch, todolistId, taskId])}/>
-        <IconButton
-            onClick={useCallback(() => {
-                dispatch(RemoveTask(todolistId, taskId))
-            }, [dispatch, todolistId, taskId])}>
-            <Delete/>
-        </IconButton>
-    </div>
+    return (
+        <div key={taskId} className={status ? 'is-done' : ''}>
+            <Checkbox
+                color='primary'
+                checked={Boolean(status)}
+                onChange={useCallback(() => {
+                    dispatch(UpdateTask(todolistId, taskId, {status: Number(!status)}))
+                }, [dispatch, todolistId, taskId, status])}
+            />
+            <EditableSpan
+                title={taskTitle}
+                updateTitleCallback={useCallback((title) => {
+                    dispatch(UpdateTask(todolistId, taskId, {title: title}))
+                }, [dispatch, todolistId, taskId])}/>
+            <IconButton
+                onClick={useCallback(() => {
+                    dispatch(RemoveTask(todolistId, taskId))
+                }, [dispatch, todolistId, taskId])}>
+                <Delete/>
+            </IconButton>
+        </div>
+    )
 })

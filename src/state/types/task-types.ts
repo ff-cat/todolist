@@ -2,7 +2,7 @@ import {ACTIONS_TYPE} from "./action-types";
 import {ThunkAction} from "redux-thunk";
 import {RootStateType} from "../store";
 import {IAddTodolist, IRemoveTodolist, ISetTodolists} from "./todolist-types";
-import {ISetAppStatus} from "./app-types";
+import {ISetAppError, ISetAppStatus} from "./app-types";
 
 export interface ITask {
     addedDate: string
@@ -78,5 +78,6 @@ export type TaskReducerActionsType =
     | ISetTodolists
     | ISetTasks
     | ISetAppStatus
+    | ISetAppError
 export type ThunkType = ThunkAction<Promise<void>, RootStateType, unknown, TaskReducerActionsType>
 

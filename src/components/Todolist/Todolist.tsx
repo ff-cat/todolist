@@ -8,9 +8,10 @@ import {TaskContainer} from "../Task/TaskContainer";
 import {ChangeTodolistFilterAC, RemoveTodolist, UpdateTodolistTitle,} from "../../state/actions/todolist-actions";
 import {AddTask, FetchTasks} from "../../state/actions/task-actions";
 import {FilterType} from "../../state/types/todolist-types";
+import s from './Todolist.module.css'
 
 
-interface IProps  {
+interface IProps {
     todolistId: string
     todolistTitle: string
     filter: FilterType
@@ -24,66 +25,64 @@ export const Todolist = React.memo(({todolistId, todolistTitle, filter}: IProps)
     }, [])
 
     return (
-        <div className="App">
+        <div>
             <div>
-                <div>
-                    <h3>
-                        <EditableSpan
-                            title={todolistTitle}
-                            updateTitleCallback={useCallback((title) => {
-                                dispatch(UpdateTodolistTitle(todolistId, title))
-                            }, [dispatch, todolistId])}
-                        />
-                        <IconButton
-                            onClick={useCallback(() => {
-                                dispatch(RemoveTodolist(todolistId))
-                            }, [dispatch, todolistId])}
-                        >
-                            <Delete/>
-                        </IconButton>
-                    </h3>
-                </div>
-                <div>
-                    <AddItemForm addItemCallback={useCallback((title: string) => {
-                        dispatch(AddTask(todolistId, title))
-                    }, [dispatch, todolistId])}
+                <h3>
+                    <EditableSpan
+                        title={todolistTitle}
+                        updateTitleCallback={useCallback((title) => {
+                            dispatch(UpdateTodolistTitle(todolistId, title))
+                        }, [dispatch, todolistId])}
                     />
-                </div>
-                <div>
-                    <TaskContainer todolistId={todolistId} filter={filter}/>
-                </div>
-                <div>
-                    <Button
+                    <IconButton
                         onClick={useCallback(() => {
-                            dispatch(ChangeTodolistFilterAC(todolistId, 'all'))
+                            dispatch(RemoveTodolist(todolistId))
                         }, [dispatch, todolistId])}
-                        className={filter === 'all' ? 'active-filter' : ''}
-                        variant={filter === 'all' ? 'contained' : 'outlined'}
-                        size='small'
-                        color='primary'
-                    >All
-                    </Button>
-                    <Button
-                        onClick={useCallback(() => {
-                            dispatch(ChangeTodolistFilterAC(todolistId, 'active'))
-                        }, [dispatch, todolistId])}
-                        className={filter === 'active' ? 'active-filter' : ''}
-                        variant={filter === 'active' ? 'contained' : 'outlined'}
-                        size='small'
-                        color='primary'
-                    >Active
-                    </Button>
-                    <Button
-                        onClick={useCallback(() => {
-                            dispatch(ChangeTodolistFilterAC(todolistId, 'completed'))
-                        }, [dispatch, todolistId])}
-                        className={filter === 'completed' ? 'active-filter' : ''}
-                        variant={filter === 'completed' ? 'contained' : 'outlined'}
-                        size='small'
-                        color='primary'
-                    >Completed
-                    </Button>
-                </div>
+                    >
+                        <Delete/>
+                    </IconButton>
+                </h3>
+            </div>
+            <div>
+                <AddItemForm addItemCallback={useCallback((title: string) => {
+                    dispatch(AddTask(todolistId, title))
+                }, [dispatch, todolistId])}
+                />
+            </div>
+            <div>
+                <TaskContainer todolistId={todolistId} filter={filter}/>
+            </div>
+            <div className={s.filterButtonBlock}>
+                <Button
+                    onClick={useCallback(() => {
+                        dispatch(ChangeTodolistFilterAC(todolistId, 'all'))
+                    }, [dispatch, todolistId])}
+                    className={filter === 'all' ? 'active-filter' : ''}
+                    variant={filter === 'all' ? 'contained' : 'outlined'}
+                    size='small'
+                    color='primary'
+                >All
+                </Button>
+                <Button
+                    onClick={useCallback(() => {
+                        dispatch(ChangeTodolistFilterAC(todolistId, 'active'))
+                    }, [dispatch, todolistId])}
+                    className={filter === 'active' ? 'active-filter' : ''}
+                    variant={filter === 'active' ? 'contained' : 'outlined'}
+                    size='small'
+                    color='primary'
+                >Active
+                </Button>
+                <Button
+                    onClick={useCallback(() => {
+                        dispatch(ChangeTodolistFilterAC(todolistId, 'completed'))
+                    }, [dispatch, todolistId])}
+                    className={filter === 'completed' ? 'active-filter' : ''}
+                    variant={filter === 'completed' ? 'contained' : 'outlined'}
+                    size='small'
+                    color='primary'
+                >Completed
+                </Button>
             </div>
         </div>
     )

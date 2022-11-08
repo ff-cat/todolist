@@ -41,7 +41,7 @@ export const App = () => {
                     }
                 </Toolbar>
             </AppBar>
-            {status === 'loading' && <LinearProgress/>}
+            {status === 'loading' && <div className='app-linear'><LinearProgress/></div>}
             <Routes>
                 <Route path='/' element={isAuth ? <MainTodoContainer/> : <Navigate to="/login" replace/>}/>
                 <Route path='/login' element={!isAuth ? <LoginContainer/> : <Navigate to="/todo" replace/>}/>

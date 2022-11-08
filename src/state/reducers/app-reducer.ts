@@ -3,7 +3,7 @@ import {AppReducerActionsTypes, IApp, RequestStatusType} from "../types/app-type
 
 const initialState: IApp = {
     status: 'idle' as RequestStatusType,
-    error: 'some error'
+    error: null
 }
 
 export const appReducer = (state: IApp = initialState, action: AppReducerActionsTypes): IApp => {

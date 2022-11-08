@@ -1,5 +1,5 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react"
-import {IconButton, TextField} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 import {AddBox} from "@mui/icons-material";
 
 
@@ -40,9 +40,9 @@ export const AddItemForm = React.memo(({addItemCallback}: IProps) => {
                 onKeyPress={onKeyPressHandler}
             />
 
-            <IconButton color='primary' onClick={onAddItem}>
+            <Button color='primary' onClick={onAddItem}>
                 <AddBox/>
-            </IconButton>
+            </Button>
         </div>
     )
 })

@@ -9,25 +9,21 @@
     margin-right: -50%;
     transform: translate(-50%, -50%);
     border: 1px black solid;
-    width: 240px;
-    height: 320px;
-    box-shadow: 10px 5px 5px #8f8f8f;
-    background-color: #f5f5f5;
+    width: 450px;
+    height: 430px;
+    box-shadow: 40px 0 0 #1976d2;
+    background-color: #ffffff;
     border-radius: 5px;
+    padding-bottom: 20px;
 }
 
 .loginBlock p {
     margin: 0;
 }
 
-.loginBlock span{
-    /*opacity: 50%;*/
-}
-
 .loginBlock h1 {
+    color: #1976d2;
     font-size: 23px;
-    color: black;
-    /*opacity: 50%;*/
 }
 
 .email {
@@ -38,22 +34,54 @@
 .password {
     margin: 2px;
     text-align: center;
-
 }
 
+.email input,
+.password input {
+    width: 250px;
+    height: 15px;
+}
+.rememberForgotPasswordBlock{
+    padding-right: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .remember {
     margin: 3px 0 3px;
     display: flex;
     color: black;
     font-size: 13px;
-    text-align: center;
+    align-items: center;
     justify-content: center;
+}
+
+.forgotPassword a {
+    color: #1976d2;
+    font-size: 13px;
 }
 
 .loginButton {
     display: flex;
     justify-content: center;
-    margin: 2px;
+    margin: 20px 2px 2px 2px;
+}
+
+.loginButton button {
+    width: 278px;
+    height: 38px;
+    border: none;
+    color: white;
+    background-color: #1976d2;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%)
+}
+
+.loginButton button:hover{
+    background-color: #116ac0;
+    box-shadow: 0 2px 4px -1px rgb(0 0 0 / 20%), 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%);;
 }
 
 .formError {

@@ -1,0 +1,10 @@
+.App {
+    position: relative;
+    height: 100vh;
+}
+
+.app-linear {
+    width: 100%;
+    position: absolute;
+    top: 64px;
+}

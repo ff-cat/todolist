@@ -10,7 +10,7 @@ import {
     ITask,
     ThunkType, IUpdateTask
 } from "../types/task-types";
-import {SetAppStatus} from "./app-actions";
+import {SetAppError, SetAppStatus} from "./app-actions";
 
 
 export const RemoveTaskAC = (todolistId: string, taskId: string): IRemoveTask => {
@@ -51,7 +51,7 @@ export const RemoveTask = (todolistId: string, taskId: string): ThunkType => {
     return async (dispatch) => {
         dispatch(SetAppStatus('loading'))
         const data = await taskAPI.deleteTask(todolistId, taskId)
-        data.status === 200 && dispatch(RemoveTaskAC(todolistId, taskId))
+        data.resultCode === 0 && dispatch(RemoveTaskAC(todolistId, taskId))
         dispatch(SetAppStatus('succeeded'))
     }
 }
@@ -59,8 +59,13 @@ export const AddTask = (todolistId: string, title: string): ThunkType => {
     return async (dispatch) => {
         dispatch(SetAppStatus('loading'))
         const data = await taskAPI.createTask(todolistId, title)
-        data.status === 200 && dispatch(AddTaskAC(data.data.data.item))
-        dispatch(SetAppStatus('succeeded'))
+        if (data.resultCode === 0) {
+            dispatch(AddTaskAC(data.data.item))
+            dispatch(SetAppStatus('succeeded'))
+        } else {
+            dispatch(SetAppError(data.messages[0]))
+            dispatch(SetAppStatus('succeeded'))
+        }
     }
 }
 export const UpdateTask = (todolistId: string, taskId: string, domainModel: IUpdateTask): ThunkType => {
@@ -80,7 +85,7 @@ export const UpdateTask = (todolistId: string, taskId: string, domainModel: IUpd
             ...domainModel
         }
         const data = await taskAPI.updateTask(todolistId, taskId, apiModel)
-        data.status === 200 && dispatch(UpdateTaskAC(todolistId, taskId, apiModel))
+        data.resultCode === 0 && dispatch(UpdateTaskAC(todolistId, taskId, apiModel))
         dispatch(SetAppStatus('succeeded'))
     }
 }
