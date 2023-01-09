@@ -1,4 +1,4 @@
-import React from "react";
+import {memo} from "react";
 import {Task} from "./Task";
 import {useAppSelector} from "../../state/hooks";
 
@@ -7,7 +7,7 @@ interface IProps  {
     filter: string
 }
 
-export const TaskContainer = React.memo(({todolistId, filter}: IProps) => {
+export const TaskContainer = memo(({todolistId, filter}: IProps) => {
     const tasks = useAppSelector(state => state.tasks)
 
     let tasksForTodolist = tasks[todolistId]
@@ -24,6 +24,7 @@ export const TaskContainer = React.memo(({todolistId, filter}: IProps) => {
                         taskId={task.id}
                         taskTitle={task.title}
                         status={task.status}
+                        entityStatus={task.entityStatus}
                     />
                 )
             }

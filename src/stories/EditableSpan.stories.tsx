@@ -9,5 +9,5 @@ export default {
 }
 
 export const EditableSpanBaseExample = () => {
-    return <EditableSpan title={'Title'} updateTitleCallback={changeCallback}/>
+    return <EditableSpan title={'Title'} updateTitleCallback={changeCallback} entityStatus={'idle'}/>
 }

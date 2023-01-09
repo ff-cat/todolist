@@ -1,22 +1,25 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import {ChangeEvent, KeyboardEvent, useState, memo} from "react";
 import {TextField} from "@mui/material";
+import {RequestStatusType} from "../../state/types/app-types";
 
-interface IProps  {
+interface IProps {
     title: string
     updateTitleCallback: (value: string) => void
+    entityStatus: RequestStatusType
 }
 
-export const EditableSpan = React.memo(({title, updateTitleCallback}: IProps) => {
+export const EditableSpan = memo(({title, updateTitleCallback, entityStatus}: IProps) => {
     const [editMode, setEditMode] = useState(false)
     const [tempTitle, setTempTitle] = useState('')
 
     const activateEditMode = () => {
+        if (entityStatus === 'loading') return
         setEditMode(true)
         setTempTitle(title)
     }
     const activateViewMode = () => {
         setEditMode(false)
-        if (tempTitle !== title){
+        if (tempTitle !== title) {
             updateTitleCallback(tempTitle)
         }
     }
@@ -24,11 +27,10 @@ export const EditableSpan = React.memo(({title, updateTitleCallback}: IProps) =>
         setTempTitle(e.currentTarget.value)
     }
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.charCode === 13){
+        if (e.charCode === 13) {
             setEditMode(false)
             updateTitleCallback(tempTitle)
         }
-
     }
 
 
@@ -36,6 +38,7 @@ export const EditableSpan = React.memo(({title, updateTitleCallback}: IProps) =>
         editMode
             ?
             <TextField
+                disabled={entityStatus === 'loading'}
                 size='small'
                 value={tempTitle}
                 onChange={onChangeTitleHandler}

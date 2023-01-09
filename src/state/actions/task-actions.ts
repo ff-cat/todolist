@@ -8,9 +8,10 @@ import {
     IRequestTask,
     ISetTasks,
     ITask,
-    ThunkType, IUpdateTask
+    ThunkType, IUpdateTask, IChangeTaskEntityStatus
 } from "../types/task-types";
 import {SetAppError, SetAppStatus} from "./app-actions";
+import {RequestStatusType} from "../types/app-types";
 
 
 export const RemoveTaskAC = (todolistId: string, taskId: string): IRemoveTask => {
@@ -38,6 +39,13 @@ export const SetTasksAC = (todolistId: string, tasks: ITask[]): ISetTasks => {
     }
 }
 
+export const SetTaskEntityStatus = (todolistId: string, taskId: string, status: RequestStatusType): IChangeTaskEntityStatus => {
+    return {
+        type: ACTIONS_TYPE.CHANGE_TASK_ENTITY_STATUS,
+        payload: {todolistId, taskId, status}
+    }
+}
+
 
 export const FetchTasks = (todolistId: string): ThunkType => {
     return async (dispatch) => {
@@ -50,20 +58,34 @@ export const FetchTasks = (todolistId: string): ThunkType => {
 export const RemoveTask = (todolistId: string, taskId: string): ThunkType => {
     return async (dispatch) => {
         dispatch(SetAppStatus('loading'))
-        const data = await taskAPI.deleteTask(todolistId, taskId)
-        data.resultCode === 0 && dispatch(RemoveTaskAC(todolistId, taskId))
-        dispatch(SetAppStatus('succeeded'))
+        dispatch(SetTaskEntityStatus(todolistId, taskId, 'loading'))
+        try {
+            const data = await taskAPI.deleteTask(todolistId, taskId)
+            data.resultCode === 0 && dispatch(RemoveTaskAC(todolistId, taskId))
+            dispatch(SetAppStatus('succeeded'))
+        } catch (error: any) {
+            dispatch(SetAppError(error.message))
+            dispatch(SetAppStatus('succeeded'))
+        } finally {
+            dispatch(SetTaskEntityStatus(todolistId, taskId, 'idle'))
+        }
+
     }
 }
 export const AddTask = (todolistId: string, title: string): ThunkType => {
     return async (dispatch) => {
         dispatch(SetAppStatus('loading'))
-        const data = await taskAPI.createTask(todolistId, title)
-        if (data.resultCode === 0) {
-            dispatch(AddTaskAC(data.data.item))
-            dispatch(SetAppStatus('succeeded'))
-        } else {
-            dispatch(SetAppError(data.messages[0]))
+        try {
+            const data = await taskAPI.createTask(todolistId, title)
+            if (data.resultCode === 0) {
+                dispatch(AddTaskAC(data.data.item))
+                dispatch(SetAppStatus('succeeded'))
+            } else {
+                dispatch(SetAppError(data.messages[0]))
+                dispatch(SetAppStatus('succeeded'))
+            }
+        } catch (error: any) {
+            dispatch(SetAppError(error.message))
             dispatch(SetAppStatus('succeeded'))
         }
     }
@@ -71,6 +93,7 @@ export const AddTask = (todolistId: string, title: string): ThunkType => {
 export const UpdateTask = (todolistId: string, taskId: string, domainModel: IUpdateTask): ThunkType => {
     return async (dispatch, getState: () => RootStateType) => {
         dispatch(SetAppStatus('loading'))
+        dispatch(SetTaskEntityStatus(todolistId, taskId, 'loading'))
         const task = getState().tasks[todolistId].find(t => t.id === taskId)
         if (!task) {
             return
@@ -84,8 +107,21 @@ export const UpdateTask = (todolistId: string, taskId: string, domainModel: IUpd
             deadline: task.deadline,
             ...domainModel
         }
-        const data = await taskAPI.updateTask(todolistId, taskId, apiModel)
-        data.resultCode === 0 && dispatch(UpdateTaskAC(todolistId, taskId, apiModel))
-        dispatch(SetAppStatus('succeeded'))
+        try {
+            const data = await taskAPI.updateTask(todolistId, taskId, apiModel)
+            if (data.resultCode === 0) {
+                dispatch(UpdateTaskAC(todolistId, taskId, apiModel))
+                dispatch(SetAppStatus('succeeded'))
+            } else {
+                dispatch(SetAppError(data.messages[0]))
+                dispatch(SetAppStatus('succeeded'))
+            }
+        } catch (error: any) {
+            dispatch(SetAppError(error.message))
+            dispatch(SetAppStatus('succeeded'))
+        } finally {
+            dispatch(SetTaskEntityStatus(todolistId, taskId, 'idle'))
+        }
+
     }
 }

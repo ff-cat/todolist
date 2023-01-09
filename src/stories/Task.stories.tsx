@@ -1,5 +1,5 @@
 import {action} from "@storybook/addon-actions";
-import React from "react";
+import {memo} from "react";
 import {Checkbox, IconButton} from "@mui/material";
 import {EditableSpan} from "../components/EditableSpan/EditableSpan";
 import {Delete} from "@mui/icons-material";
@@ -8,7 +8,7 @@ const checkboxCallback = action('Status changed')
 const titleCallback = action('Title changed')
 const deleteCallback = action('Task was deleted')
 
-const Task = React.memo((props: any) => {
+const Task = memo((props: any) => {
     return <div
         className={props.isDone ? 'is-done' : ''}>
         <Checkbox
@@ -18,7 +18,9 @@ const Task = React.memo((props: any) => {
         />
         <EditableSpan
             title={props.title}
-            updateTitleCallback={titleCallback}/>
+            updateTitleCallback={titleCallback}
+            entityStatus={'idle'}
+        />
         <IconButton
             onClick={()=>{deleteCallback(props.title)}}>
             <Delete/>

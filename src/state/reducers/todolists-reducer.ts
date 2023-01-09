@@ -1,10 +1,19 @@
 import {ACTIONS_TYPE} from "../types/action-types";
-import {TodolistReducerActionsType, ITodolists} from "../types/todolist-types";
+import {TodolistReducerActionsType, ITodolist} from "../types/todolist-types";
 
-const initialState: ITodolists[] = []
+const initialState: ITodolist[] = []
 
-export const todolistsReducer = (state: ITodolists[] = initialState, action: TodolistReducerActionsType): ITodolists[] => {
+export const todolistsReducer = (state: ITodolist[] = initialState, action: TodolistReducerActionsType): ITodolist[] => {
     switch (action.type) {
+        case ACTIONS_TYPE.SET_TODOLISTS:
+            return action.payload.todolists.map(tl => ({
+                addedDate: '',
+                order: 0,
+                id: tl.id,
+                title: tl.title,
+                filter: 'all',
+                entityStatus: 'idle'
+            }))
         case ACTIONS_TYPE.REMOVE_TODOLIST:
             return state.filter(s => s.id !== action.payload.todolistId)
         case ACTIONS_TYPE.ADD_TODOLIST:
@@ -13,20 +22,14 @@ export const todolistsReducer = (state: ITodolists[] = initialState, action: Tod
                 order: 0,
                 id: action.payload.todolistId,
                 title: action.payload.title,
-                filter: 'all'
+                filter: 'all',
+                entityStatus: 'idle'
             }, ...state]
         case ACTIONS_TYPE.CHANGE_TODOLIST_TITLE:
-            return state.map(s => s.id === action.payload.todolistId ? {...s, title: action.payload.title} : s)
         case ACTIONS_TYPE.CHANGE_TODOLIST_FILTER:
-            return state.map(s => s.id === action.payload.todolistId ? {...s, filter: action.payload.filter} : s)
-        case ACTIONS_TYPE.SET_TODOLISTS:
-            return action.payload.todolists.map(tl => ({
-                addedDate: '',
-                order: 0,
-                id: tl.id,
-                title: tl.title,
-                filter: 'all'
-            }))
+            return state.map(s => s.id === action.payload.todolistId ? {...s, ...action.payload} : s)
+        case ACTIONS_TYPE.CHANGE_TODOLIST_ENTITY_STATUS:
+            return state.map(s => s.id === action.payload.todolistId ? {...s, entityStatus: action.payload.status} : s)
         default:
             return state
     }

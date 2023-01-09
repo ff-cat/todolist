@@ -1,13 +1,15 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react"
+import  {memo, ChangeEvent, KeyboardEvent, useState} from "react"
 import {Button, TextField} from "@mui/material";
 import {AddBox} from "@mui/icons-material";
+import {RequestStatusType} from "../../state/types/app-types";
 
 
-interface IProps  {
+interface IProps {
     addItemCallback: (title: string) => void
+    entityStatus?: RequestStatusType
 }
 
-export const AddItemForm = React.memo(({addItemCallback}: IProps) => {
+export const AddItemForm = memo(({addItemCallback, entityStatus}: IProps) => {
     const [tempTitle, setTempTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
@@ -30,6 +32,7 @@ export const AddItemForm = React.memo(({addItemCallback}: IProps) => {
     return (
         <div>
             <TextField
+                disabled={entityStatus === 'loading'}
                 variant='outlined'
                 size='small'
                 label='Title'
@@ -40,7 +43,11 @@ export const AddItemForm = React.memo(({addItemCallback}: IProps) => {
                 onKeyPress={onKeyPressHandler}
             />
 
-            <Button color='primary' onClick={onAddItem}>
+            <Button
+                color='primary'
+                onClick={onAddItem}
+                disabled={entityStatus === 'loading'}
+            >
                 <AddBox/>
             </Button>
         </div>

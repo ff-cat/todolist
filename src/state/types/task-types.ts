@@ -1,8 +1,8 @@
 import {ACTIONS_TYPE} from "./action-types";
 import {ThunkAction} from "redux-thunk";
 import {RootStateType} from "../store";
-import {IAddTodolist, IRemoveTodolist, ISetTodolists} from "./todolist-types";
-import {ISetAppError, ISetAppStatus} from "./app-types";
+import {IAddTodolist, IChangeTodolistEntityStatus, IRemoveTodolist, ISetTodolists} from "./todolist-types";
+import {ISetAppError, ISetAppStatus, RequestStatusType} from "./app-types";
 
 export interface ITask {
     addedDate: string
@@ -15,7 +15,13 @@ export interface ITask {
     status: number
     title: string
     todoListId: string
+    entityStatus: RequestStatusType
 }
+
+export interface ITasks {
+    [key: string]: ITask[]
+}
+
 export interface IRequestTask {
     title: string
     description: string | null
@@ -24,14 +30,13 @@ export interface IRequestTask {
     startDate: string | null
     deadline: string | null
 }
+
 export interface IGetTasksResponse {
     error: string | null
     totalCount: number
     items: ITask[]
 }
-export interface ITasks {
-    [key: string]: ITask[]
-}
+
 export interface IUpdateTask {
     title?: string
     description?: string | null
@@ -40,6 +45,7 @@ export interface IUpdateTask {
     startDate?: string | null
     deadline?: string | null
 }
+
 export interface IRemoveTask {
     type: ACTIONS_TYPE.REMOVE_TASK
     payload: {
@@ -47,12 +53,14 @@ export interface IRemoveTask {
         taskId: string
     }
 }
+
 export interface IAddTask {
     type: ACTIONS_TYPE.ADD_TASK
     payload: {
         task: ITask
     }
 }
+
 export interface IChangeTaskTitle {
     type: ACTIONS_TYPE.UPDATE_TASK
     payload: {
@@ -61,11 +69,21 @@ export interface IChangeTaskTitle {
         model: IRequestTask
     }
 }
+
 export interface ISetTasks {
     type: ACTIONS_TYPE.SET_TASKS
     payload: {
         tasks: ITask[]
         todolistId: string
+    }
+}
+
+export interface IChangeTaskEntityStatus {
+    type: ACTIONS_TYPE.CHANGE_TASK_ENTITY_STATUS
+    payload: {
+        todolistId: string
+        taskId: string
+        status: RequestStatusType
     }
 }
 
@@ -79,5 +97,6 @@ export type TaskReducerActionsType =
     | ISetTasks
     | ISetAppStatus
     | ISetAppError
+    | IChangeTaskEntityStatus
 export type ThunkType = ThunkAction<Promise<void>, RootStateType, unknown, TaskReducerActionsType>
 

@@ -7,18 +7,20 @@ import {v1} from "uuid";
 import thunkMiddleware from "redux-thunk";
 import {appReducer} from "../../state/reducers/app-reducer";
 import {authReducer} from "../../state/reducers/auth-reducer";
+import {reducer as formReducer} from "redux-form/lib/reducer";
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todolists: todolistsReducer,
     app: appReducer,
     auth: authReducer,
+    form: formReducer,
 })
 
 const initialGlobalState = {
     todolists: [
-        {addedDate: '', order: 0, id: "todolistId1", title: "What to learn", filter: "all"},
-        {addedDate: '', order: 0, id: "todolistId2", title: "What to buy", filter: "all"}
+        {addedDate: '', order: 0, id: "todolistId1", title: "What to learn", filter: "all", entityStatus: 'idle'},
+        {addedDate: '', order: 0, id: "todolistId2", title: "What to buy", filter: "all", entityStatus: 'idle'}
     ],
     tasks: {
         ["todolistId1"]: [
@@ -32,7 +34,8 @@ const initialGlobalState = {
                 startDate: null,
                 status: 0,
                 title: "HTML&CSS",
-                todoListId: "86afffa2-d5c3-4c07-ae33-150a87a15863"
+                todoListId: "86afffa2-d5c3-4c07-ae33-150a87a15863",
+                entityStatus: 'idle',
             },
             {
                 addedDate: "2022-07-09T12:18:19.477",
@@ -44,7 +47,8 @@ const initialGlobalState = {
                 startDate: null,
                 status: 0,
                 title: "REACT",
-                todoListId: "86afffa2-d5c3-4c07-ae33-150a87a15862"
+                todoListId: "86afffa2-d5c3-4c07-ae33-150a87a15862",
+                entityStatus: 'idle',
             },
         ],
         ["todolistId2"]: [
@@ -58,7 +62,8 @@ const initialGlobalState = {
                 startDate: null,
                 status: 0,
                 title: "Milk",
-                todoListId: "86afffa2-d5c3-4c07-ae33-150a87a15862"
+                todoListId: "86afffa2-d5c3-4c07-ae33-150a87a15862",
+                entityStatus: 'idle',
             },
             {
                 addedDate: "2022-07-09T12:18:19.477",
@@ -70,7 +75,8 @@ const initialGlobalState = {
                 startDate: null,
                 status: 0,
                 title: "Bread",
-                todoListId: "86afffa2-d5c3-4c07-ae33-150a87a15862"
+                todoListId: "86afffa2-d5c3-4c07-ae33-150a87a15862",
+                entityStatus: 'idle',
             },
         ]
     },
@@ -85,9 +91,7 @@ const initialGlobalState = {
         isAuth: false,
         initializationSuccess: false
     },
-    form: {
-
-    }
+    form: {}
 };
 
 export const storyBookStore = createStore(rootReducer, initialGlobalState as RootStateType, applyMiddleware(thunkMiddleware));

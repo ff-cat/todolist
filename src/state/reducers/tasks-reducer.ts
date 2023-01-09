@@ -1,12 +1,15 @@
 import {ACTIONS_TYPE} from "../types/action-types";
-import {TaskReducerActionsType, ITasks} from "../types/task-types";
+import {ITasks, TaskReducerActionsType} from "../types/task-types";
 
 const initialState: ITasks = {}
 
 export const tasksReducer = (state: ITasks = initialState, action: TaskReducerActionsType): ITasks => {
     switch (action.type) {
         case ACTIONS_TYPE.SET_TASKS:
-            return {...state, [action.payload.todolistId]: action.payload.tasks.map(t => ({...t})) }
+            return {
+                ...state,
+                [action.payload.todolistId]: action.payload.tasks.map(t => ({...t, entityStatus: 'idle'}))
+            }
         case ACTIONS_TYPE.REMOVE_TASK:
             return {
                 ...state,
@@ -15,7 +18,9 @@ export const tasksReducer = (state: ITasks = initialState, action: TaskReducerAc
         case ACTIONS_TYPE.ADD_TASK:
             return {
                 ...state,
-                [action.payload.task.todoListId]: [{...action.payload.task}, ...state[action.payload.task.todoListId]]
+                [action.payload.task.todoListId]: [{
+                    ...action.payload.task, entityStatus: 'idle'
+                }, ...state[action.payload.task.todoListId]]
             }
         case ACTIONS_TYPE.UPDATE_TASK:
             return {
@@ -34,6 +39,12 @@ export const tasksReducer = (state: ITasks = initialState, action: TaskReducerAc
                 stateCopy[tl.id] = []
             })
             return stateCopy;
+        case ACTIONS_TYPE.CHANGE_TASK_ENTITY_STATUS:
+            return {
+                ...state,
+                [action.payload.todolistId]: state[action.payload.todolistId].map(s => s.id === action.payload.taskId
+                    ? {...s, entityStatus: action.payload.status} : s)
+            }
         default:
             return state
     }
