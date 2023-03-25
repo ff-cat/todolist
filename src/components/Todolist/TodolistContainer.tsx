@@ -11,7 +11,7 @@ export const TodolistContainer = () => {
 
     useEffect(() => {
         dispatch(FetchTodolists())
-    }, [])
+    }, [dispatch])
 
     return (
         <Grid container spacing={3}>

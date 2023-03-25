@@ -1,6 +1,8 @@
-import {memo} from "react";
+import {memo, useEffect} from "react";
 import {Task} from "./Task";
 import {useAppSelector} from "../../state/hooks";
+import {FetchTasks} from "../../state/actions/task-actions";
+import {useDispatch} from "react-redux";
 
 interface IProps  {
     todolistId: string
@@ -8,6 +10,12 @@ interface IProps  {
 }
 
 export const TaskContainer = memo(({todolistId, filter}: IProps) => {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(FetchTasks(todolistId))
+    }, [])
+
     const tasks = useAppSelector(state => state.tasks)
 
     let tasksForTodolist = tasks[todolistId]

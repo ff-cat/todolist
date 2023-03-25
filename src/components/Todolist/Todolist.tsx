@@ -1,4 +1,4 @@
-import {useCallback, useEffect, memo} from "react"
+import {useCallback, useEffect, memo, useState} from "react"
 import {AddItemForm} from "../AddItemForm/AddItemForm";
 import {EditableSpan} from "../EditableSpan/EditableSpan";
 import {Button, IconButton} from "@mui/material";
@@ -6,7 +6,7 @@ import {Delete} from "@mui/icons-material";
 import {useDispatch} from "react-redux";
 import {TaskContainer} from "../Task/TaskContainer";
 import {ChangeTodolistFilter, RemoveTodolist, UpdateTodolistTitle,} from "../../state/actions/todolist-actions";
-import {AddTask, FetchTasks} from "../../state/actions/task-actions";
+import {AddTask} from "../../state/actions/task-actions";
 import {FilterType} from "../../state/types/todolist-types";
 import s from './Todolist.module.css'
 import {RequestStatusType} from "../../state/types/app-types";
@@ -20,11 +20,13 @@ interface IProps {
 }
 
 export const Todolist = memo(({todolistId, todolistTitle, filter, entityStatus}: IProps) => {
-    const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(FetchTasks(todolistId))
-    }, [])
+    useEffect(()=>{
+        setFirstRender(true)
+    },[])
+    const [firstRender, setFirstRender] = useState<boolean>(false)
+
+    const dispatch = useDispatch()
 
     return (
         <div>
@@ -58,7 +60,7 @@ export const Todolist = memo(({todolistId, todolistTitle, filter, entityStatus}:
                 />
             </div>
             <div>
-                <TaskContainer todolistId={todolistId} filter={filter}/>
+                {firstRender && <TaskContainer todolistId={todolistId} filter={filter}/>}
             </div>
             <div className={s.filterButtonBlock}>
                 <Button
