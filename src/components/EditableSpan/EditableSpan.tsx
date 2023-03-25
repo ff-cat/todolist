@@ -1,7 +1,7 @@
 import {ChangeEvent, KeyboardEvent, useState, memo} from "react";
 import {TextField} from "@mui/material";
 import {RequestStatusType} from "../../state/types/app-types";
-
+import s from './EditableSpan.module.css'
 interface IProps {
     title: string
     updateTitleCallback: (value: string) => void
@@ -35,9 +35,7 @@ export const EditableSpan = memo(({title, updateTitleCallback, entityStatus}: IP
 
 
     return (
-        editMode
-            ?
-            <TextField
+        editMode ? <TextField
                 disabled={entityStatus === 'loading'}
                 size='small'
                 value={tempTitle}
@@ -45,7 +43,6 @@ export const EditableSpan = memo(({title, updateTitleCallback, entityStatus}: IP
                 onBlur={activateViewMode}
                 autoFocus
                 onKeyPress={onKeyPressHandler}
-            />
-            : <span onDoubleClick={activateEditMode}>{title}</span>
+            /> : <div className={s.eSpan}><span onDoubleClick={activateEditMode}>{title}</span></div>
     )
 })
